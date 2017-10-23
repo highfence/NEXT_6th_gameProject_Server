@@ -1,2 +1,3 @@
-# NEXT_6th_gameProject_Server
+# NEXT MAN COMING
 
+[모티브](https://pheonise.itch.io/last-man-standing)
