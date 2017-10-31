@@ -177,7 +177,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LittleHill\\.nuget\\packages\\": {},
+    "C:\\Users\\LongShore\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -186,17 +186,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Dev\\NextManComingServer\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
+      "projectUniqueName": "C:\\dev\\6thProject\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
       "projectName": "NetworkLibrary",
-      "projectPath": "C:\\Dev\\NextManComingServer\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
-      "packagesPath": "C:\\Users\\LittleHill\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\NextManComingServer\\Library\\NetworkLibrary\\NetworkLibrary\\obj\\",
+      "projectPath": "C:\\dev\\6thProject\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
+      "packagesPath": "C:\\Users\\LongShore\\.nuget\\packages\\",
+      "outputPath": "C:\\dev\\6thProject\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\LittleHill\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LongShore\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
