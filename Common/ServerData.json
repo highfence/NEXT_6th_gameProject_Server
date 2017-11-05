@@ -1,3 +1,6 @@
 {
-	"localhost" = "127.0.0.1"
+	"DBServerAddress" : "127.0.0.1",
+	"DBServerPort" : 20000,
+	"ManageServerAddress" : "127.0.0.1",
+	"ManageServerPort" : 19000
 }
