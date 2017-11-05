@@ -42,6 +42,11 @@ namespace NextManComing_LoginServer
 			public Int64 Token;
 		}
 
+		public struct UserTokenExpireNtf
+		{
+			public string UserId;
+			public Int64 Token;
+		}
 	}
 
 }
