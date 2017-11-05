@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-enum ErrorCode
+public enum ErrorCode
 {
 	None = 0,
 
@@ -14,4 +14,10 @@ enum ErrorCode
 	InvalidPw = 811,
 
 	IdAlreadyExist = 820,
+
+	RedisInvalidAddress = 850,
+	RedisStartFailed = 851,
+
+	UnregistedId = 860,
+	InvalidToken = 861,
 }
