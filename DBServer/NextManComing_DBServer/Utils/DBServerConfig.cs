@@ -46,6 +46,6 @@ namespace NextManComing_DBServer
 		public int ManageServerPort { get; private set; }
 
 		public string LoginServerAddress { get; private set; }
-		public int LoginServerPort { get; private set;s }
+		public int LoginServerPort { get; private set; }
 	}
 }
