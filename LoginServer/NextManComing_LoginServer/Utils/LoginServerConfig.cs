@@ -20,6 +20,9 @@ namespace NextManComing_LoginServer
 
 				var configJson = JObject.Parse(configString);
 
+				LoginServerAddress = configJson["LoginServerAddress"].ToString();
+				LoginServerPort = Convert.ToInt32(configJson["LoginServerPort"].ToString());
+
 				DBServerAddress = configJson["DBServerAddress"].ToString();
 				DBServerPort = Convert.ToInt32(configJson["DBServerPort"].ToString());
 
@@ -40,7 +43,11 @@ namespace NextManComing_LoginServer
 
 		public string DBServerAddress { get; private set; }
 		public int DBServerPort { get; private set; }
+
 		public string ManageServerAddress { get; private set; }
 		public int ManageServerPort { get; private set; }
+
+		public string LoginServerAddress { get; private set; }
+		public int LoginServerPort { get; private set; }
     }
 }

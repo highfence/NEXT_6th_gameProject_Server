@@ -6,6 +6,9 @@ namespace NextManComing_LoginServer
     {
         static void Main(string[] args)
         {
+			var config = LoginServerConfig.GetInstance();
+
+
 
         }
     }
