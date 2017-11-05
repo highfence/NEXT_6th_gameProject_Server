@@ -6,7 +6,7 @@ namespace NextManComing_LoginServer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
         }
     }
 }
