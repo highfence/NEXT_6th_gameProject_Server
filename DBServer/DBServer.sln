@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBServer", "DBServer\DBServer.csproj", "{E5064F6C-8145-4981-A079-D88D97EB0F2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextManComing_DBServer", "NextManComing_DBServer\NextManComing_DBServer.csproj", "{33CCBD68-1749-45E4-8D8D-762742B77939}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E5064F6C-8145-4981-A079-D88D97EB0F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5064F6C-8145-4981-A079-D88D97EB0F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5064F6C-8145-4981-A079-D88D97EB0F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5064F6C-8145-4981-A079-D88D97EB0F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33CCBD68-1749-45E4-8D8D-762742B77939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CCBD68-1749-45E4-8D8D-762742B77939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CCBD68-1749-45E4-8D8D-762742B77939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CCBD68-1749-45E4-8D8D-762742B77939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9920FA17-7A5C-4923-B08E-0C85EACDF013}
+		SolutionGuid = {317A3C04-E3FE-4FDF-9B1A-9E68FE496C88}
 	EndGlobalSection
 EndGlobal

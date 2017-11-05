@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DBServer
+namespace NextManComing_DBServer
 {
     class Program
     {
