@@ -13,105 +13,72 @@ namespace NextManComing_DBServer
 		public string Pw;
 	}
 
-    internal class MongoDBManager
+    internal static class MongoDBManager
     {
-		// 유저의 정보가 MongoDB에 적혀있는 것과 일치하는지 판단해주는 메소드.
-		public static async Task<LoginServerPacket.UserValidationRes> GetUserValidation(string userId, string encryptedPw)
+		// 해당하는 유저의 정보가 MongoDB에 있는지 확인해주는 메소드.
+		public static async Task<ErrorCode> IsUserExist(string userId, string encryptedPw)
 		{
-			var userValidation = new LoginServerPacket.UserValidationRes()
-			{
-				Result = (short)ErrorCode.None
-			};
-
-			var collection = GetCollection<DBUser>(UserDBName, LoginCollectionName);
+			var collection = GetCollection<DBUser>(userDBName, loginCollectionName);
 			DBUser findUser;
 
 			try
 			{
-				findUser = await collection.Find(recordedUser => recordedUser.Id == userId).FirstOrDefaultAsync();
+				findUser = await collection.Find(x => x.Id == userId).FirstOrDefaultAsync();
 			}
 			catch (Exception e)
 			{
-				// MongoDB에서 Find하다가 예외가 발생한 경우.
 				Console.WriteLine(e.Message);
-				userValidation.Result = (short)ErrorCode.MongoDBFindError;
-
-				return userValidation;
+				return ErrorCode.MongoDBFindError;
 			}
 
-			if (string.IsNullOrEmpty(findUser.Id))
-			{
-				// 유저 정보가 없다면 에러 반환.
-				userValidation.Result = (short)ErrorCode.InvalidId;
-			}
-			else if (findUser.Pw != encryptedPw)
-			{
-				// 비밀번호가 일치하지 않는다면 에러 반환.
-				userValidation.Result = (short)ErrorCode.InvalidPw;
-			}
-
-			return userValidation;
-		}
-
-		// MongoDB에 유저의 정보를 등록하는 메소드.
-		public static async Task<LoginServerPacket.UserJoinInRes> JoinUser(string userId, string encryptedPw)
-		{
-			var userJoinRes = new LoginServerPacket.UserJoinInRes()
-			{
-				Result = (short)ErrorCode.None
-			};
-
-			var collection = GetCollection<DBUser>(UserDBName, LoginCollectionName);
-			DBUser findUser;
-
-			// 요청된 아이디와 중복된 아이디가 있는지 확인한다.
-			try
-			{
-				findUser = await collection.Find(recordedUser => recordedUser.Id == userId).FirstOrDefaultAsync();
-			}
-			catch (Exception e)
-			{
-				// MongoDB에서 Find하다가 예외가 발생한 경우.
-				Console.WriteLine(e.Message);
-				userJoinRes.Result = (short)ErrorCode.MongoDBFindError;
-
-				return userJoinRes;
-			}
-
-			// 중복된 아이디가 있다면 유저 정보가 이미 있다고 적어놓고 반환한다.
 			if (findUser != null)
 			{
-				userJoinRes.Result = (short)ErrorCode.IdAlreadyExist;
-				return userJoinRes;
+				return ErrorCode.None;
+			}
+			else
+			{
+				return ErrorCode.InvalidId;
+			}
+		}
+
+		// MongoDB에 지정한 유저의 정보를 등록하는 메소드.
+		public static async Task<ErrorCode> JoinUser(string userId, string encryptedPw)
+		{
+			// 일단 해당하는 정보의 유저가 이미 있는지를 확인.
+			var checkValidation = await IsUserExist(userId, encryptedPw);
+			// 이미 존재한다면 에러코드 반환.
+			if (checkValidation == ErrorCode.None)
+			{
+				return ErrorCode.IdAlreadyExist;
 			}
 
-			// 중복된 아이디가 없다면 새로 등록해준다.
-			var newUser = new DBUser()
+			// 존재하지 않는다면 가입 절차 진행.
+			var newUser = new DBUser
 			{
 				Id = userId,
+				Pw = encryptedPw,
 				UId = DateTime.Now.Ticks,
-				Pw = encryptedPw
 			};
 
+			var collection = GetCollection<DBUser>(userDBName, loginCollectionName);
 			try
 			{
 				await collection.InsertOneAsync(newUser);
 			}
 			catch (Exception e)
 			{
-				// MongoDB에 등록하는 과정에서 오류가 일어났을 경우.
 				Console.WriteLine(e.Message);
-				userJoinRes.Result = (short)ErrorCode.MongoDBInsertError;
+				return ErrorCode.MongoDBInsertError;
 			}
 
-			return userJoinRes;
+			return ErrorCode.None;
 		}
 
 		private const string connectionString = "mongodb://localhost:27017/?maxPoolSize=200";
 
-		private const string UserDBName = "UserDB";
+		private const string userDBName = "UserDB";
 
-		private const string LoginCollectionName = "UserLoginInfo";
+		private const string loginCollectionName = "UserLoginInfo";
 
 		private static IMongoDatabase GetMongoDatabase(string dbName)
 		{
