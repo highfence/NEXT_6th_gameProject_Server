@@ -18,6 +18,10 @@ public enum ErrorCode
 	RedisInvalidAddress = 850,
 	RedisStartFailed = 851,
 
+	TokenRegistError = 852,
+	TokenDeleteError = 853,
+
 	UnregistedId = 860,
 	InvalidToken = 861,
+
 }

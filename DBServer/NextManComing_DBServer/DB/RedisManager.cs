@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CloudStructures;
 
-namespace DBServer.DB
+namespace NextManComing_DBServer
 {
 	public static class RedisManager
 	{
