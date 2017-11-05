@@ -7,16 +7,15 @@ namespace NextManComing_DBServer
 	// 로그인 서버와 통신하기 위해 정의된 패킷 구조체들.
 	internal static class LoginServerPacket
 	{
-		public struct LoginReq
+		public struct UserValidationReq 
 		{
 			public string UserId;
-			public string UserPw;
+			public string EncryptedPw;
 		}
 
-		public struct LoginRes
+		public struct UserValidationRes
 		{
 			public short Result;
-			public Int64 Token;
 		}
 	}
 
