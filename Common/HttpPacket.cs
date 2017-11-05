@@ -4,8 +4,7 @@ using System.Text;
 
 namespace NextManComing_DBServer
 {
-	// 로그인 서버와 통신하기 위해 정의된 패킷 구조체들.
-	public static class LoginServerPacket
+	public static class HttpPacket
 	{
 		public struct UserValidationReq 
 		{
@@ -61,11 +60,9 @@ namespace NextManComing_DBServer
 		{
 			public short Result;
 		}
-
 	}
 
-	// 게임 서버와 통신하기 위해 정의된 패킷 구조체들.
-	internal static class GameServerPacket
+	internal static class TcpPacket
 	{
 
 	}

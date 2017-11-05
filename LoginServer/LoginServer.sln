@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextManComing_LoginServer", "NextManComing_LoginServer\NextManComing_LoginServer.csproj", "{7C051836-2D12-4322-AB5B-81DABF314C75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextManComing_LoginServer", "NextManComing_LoginServer\NextManComing_LoginServer.csproj", "{7C051836-2D12-4322-AB5B-81DABF314C75}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextManComing_DBServer", "..\DBServer\NextManComing_DBServer\NextManComing_DBServer.csproj", "{C2B917D2-CCA2-42C0-AFA2-E6BD907EB164}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7C051836-2D12-4322-AB5B-81DABF314C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C051836-2D12-4322-AB5B-81DABF314C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C051836-2D12-4322-AB5B-81DABF314C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B917D2-CCA2-42C0-AFA2-E6BD907EB164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B917D2-CCA2-42C0-AFA2-E6BD907EB164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B917D2-CCA2-42C0-AFA2-E6BD907EB164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B917D2-CCA2-42C0-AFA2-E6BD907EB164}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
