@@ -15,20 +15,6 @@ namespace NextManComing_DBServer
 
     internal class MongoDBManager
     {
-		private const string connectionString = "mongodb://localhost:27017/?maxPoolSize=200";
-		public const string UserDBName = "UserDB";
-		public const string LoginCollectionName = "UserLoginInfo";
-
-		private static IMongoDatabase GetMongoDatabase(string dbName)
-		{
-			return new MongoClient(connectionString).GetDatabase(dbName);
-		}
-
-		private static IMongoCollection<T> GetCollection<T>(string dbName, string collectionName)
-		{
-			return GetMongoDatabase(dbName).GetCollection<T>(collectionName);
-		}
-
 		// 유저의 정보가 MongoDB에 적혀있는 것과 일치하는지 판단해주는 메소드.
 		public static async Task<LoginServerPacket.UserValidationRes> GetUserValidation(string userId, string encryptedPw)
 		{
@@ -67,5 +53,74 @@ namespace NextManComing_DBServer
 			return userValidation;
 		}
 
+		// MongoDB에 유저의 정보를 등록하는 메소드.
+		public static async Task<LoginServerPacket.UserJoinInRes> JoinUser(string userId, string encryptedPw)
+		{
+			var userJoinRes = new LoginServerPacket.UserJoinInRes()
+			{
+				Result = (short)ErrorCode.None
+			};
+
+			var collection = GetCollection<DBUser>(UserDBName, LoginCollectionName);
+			DBUser findUser;
+
+			// 요청된 아이디와 중복된 아이디가 있는지 확인한다.
+			try
+			{
+				findUser = await collection.Find(recordedUser => recordedUser.Id == userId).FirstOrDefaultAsync();
+			}
+			catch (Exception e)
+			{
+				// MongoDB에서 Find하다가 예외가 발생한 경우.
+				Console.WriteLine(e.Message);
+				userJoinRes.Result = (short)ErrorCode.MongoDBFindError;
+
+				return userJoinRes;
+			}
+
+			// 중복된 아이디가 있다면 유저 정보가 이미 있다고 적어놓고 반환한다.
+			if (findUser != null)
+			{
+				userJoinRes.Result = (short)ErrorCode.IdAlreadyExist;
+				return userJoinRes;
+			}
+
+			// 중복된 아이디가 없다면 새로 등록해준다.
+			var newUser = new DBUser()
+			{
+				Id = userId,
+				UId = DateTime.Now.Ticks,
+				Pw = encryptedPw
+			};
+
+			try
+			{
+				await collection.InsertOneAsync(newUser);
+			}
+			catch (Exception e)
+			{
+				// MongoDB에 등록하는 과정에서 오류가 일어났을 경우.
+				Console.WriteLine(e.Message);
+				userJoinRes.Result = (short)ErrorCode.MongoDBInsertError;
+			}
+
+			return userJoinRes;
+		}
+
+		private const string connectionString = "mongodb://localhost:27017/?maxPoolSize=200";
+
+		private const string UserDBName = "UserDB";
+
+		private const string LoginCollectionName = "UserLoginInfo";
+
+		private static IMongoDatabase GetMongoDatabase(string dbName)
+		{
+			return new MongoClient(connectionString).GetDatabase(dbName);
+		}
+
+		private static IMongoCollection<T> GetCollection<T>(string dbName, string collectionName)
+		{
+			return GetMongoDatabase(dbName).GetCollection<T>(collectionName);
+		}
     }
 }

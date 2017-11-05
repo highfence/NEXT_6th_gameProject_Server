@@ -17,6 +17,17 @@ namespace NextManComing_DBServer
 		{
 			public short Result;
 		}
+
+		public struct UserJoinInReq
+		{
+			public string UserId;
+			public string EncryptedPw;
+		}
+
+		public struct UserJoinInRes
+		{
+			public short Result;
+		}
 	}
 
 	// 게임 서버와 통신하기 위해 정의된 패킷 구조체들.
