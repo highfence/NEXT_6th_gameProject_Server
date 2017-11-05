@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Packets\PacketData.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MessagePack" Version="1.7.2" />
     <PackageReference Include="MessagePackAnalyzer" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" Version="5.2.3" />
