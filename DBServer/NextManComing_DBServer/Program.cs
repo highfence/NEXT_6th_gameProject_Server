@@ -10,6 +10,7 @@ namespace NextManComing_DBServer
 	{
 		static void Main(string[] args)
 		{
+
 		}
 	}
 }
