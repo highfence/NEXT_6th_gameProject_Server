@@ -12,7 +12,7 @@ namespace NextManComing_DBServer
 
 		protected DBServerConfig()
 		{
-			using (StreamReader r = new StreamReader("../../Common/ServerData.json"))
+			using (StreamReader r = new StreamReader("../../../../Common/ServerData.json"))
 			{
 				var configString = r.ReadToEnd();
 

@@ -16,6 +16,8 @@ namespace NextManComing_DBServer
 			return error;
 		}
 
+		// 레디스 연결을 미리 해둔다.
+		// 필요할 때 연결을 시작하면 너무 느리므로.
 		private static ErrorCode InitDB()
 		{
 			const string redisList = "localhost:6379";

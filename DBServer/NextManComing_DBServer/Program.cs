@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin.Hosting;
 using System;
+using System.Net.Http;
 using System.Text;
 
 namespace NextManComing_DBServer
@@ -13,19 +14,22 @@ namespace NextManComing_DBServer
 			var addressBuilder = new StringBuilder(20);
 			addressBuilder.AppendFormat("http://*:{0}/", config.DBServerPort);
 
-			using (WebApp.Start<Startup>(url: addressBuilder.ToString()))
+			//var baseAddress = addressBuilder.ToString();
+			var baseAddress = "http://localhost:20000/";
+
+			using (WebApp.Start<Startup>(url: baseAddress))
 			{
 				var result = DBServerMain.Init();
 
 				if (result != ErrorCode.None)
 				{
-					Console.WriteLine("DBServer Initialize Failed. ErrorCode : ", result);
+					Console.WriteLine("DBServer Initialize Failed. ErrorCode : {0}", result);
 					return;
 				}
-			}
 
-			Console.WriteLine("DBServer Initialized. BaseAddress : ", addressBuilder.ToString());
-			Console.ReadLine();
+				Console.WriteLine("DBServer Initialized. BaseAddress : {0}", baseAddress);
+				Console.ReadLine();
+			}
 		}
 	}
 }
