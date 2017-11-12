@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace NextManComing_LoginServer
 {
-    internal class LoginServerConfig
-    {
+	internal class LoginServerConfig
+	{
 		private static LoginServerConfig instance;
 
 		protected LoginServerConfig()
 		{
-			using (StreamReader r = new StreamReader("../../Common/ServerData.json"))
+			using (StreamReader r = new StreamReader("../../../../Common/ServerData.json"))
 			{
 				var configString = r.ReadToEnd();
 

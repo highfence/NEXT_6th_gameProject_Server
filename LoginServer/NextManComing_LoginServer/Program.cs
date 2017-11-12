@@ -1,30 +1,28 @@
-﻿using System;
+﻿using Microsoft.Owin.Hosting;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace NextManComing_LoginServer
 {
-    public class Program
-    {
-		static string baseAddress = "http://localhost:18000/";
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			var config = LoginServerConfig.GetInstance();
 
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+			var addressBuilder = new StringBuilder(20);
+			addressBuilder.AppendFormat("http://*:{0}/", config.LoginServerPort);
 
-		public static IWebHost BuildWebHost(string[] args) =>
+			var baseAddress = "http://localhost:18000/";
 
-			WebHost.CreateDefaultBuilder(args)
-				.UseKestrel()
-				.UseStartup<Startup>()
-				.UseUrls(baseAddress)
-                .Build();
-    }
+			using (WebApp.Start<Startup>(url : baseAddress))
+			{
+				Console.WriteLine($"Login server initialized. Base address : {baseAddress}");
+				Console.ReadLine();
+			}
+		}
+	}
 }
