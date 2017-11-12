@@ -177,7 +177,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LittleHill\\.nuget\\packages\\": {},
+    "C:\\Users\\Highfence\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -186,17 +186,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Dev\\NextManComingServer\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj",
+      "projectUniqueName": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj",
       "projectName": "LogicLibrary",
-      "projectPath": "C:\\Dev\\NextManComingServer\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj",
-      "packagesPath": "C:\\Users\\LittleHill\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\NextManComingServer\\Library\\LogicLibrary\\LogicLibrary\\obj\\",
+      "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj",
+      "packagesPath": "C:\\Users\\Highfence\\.nuget\\packages\\",
+      "outputPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\LittleHill\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Highfence\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
