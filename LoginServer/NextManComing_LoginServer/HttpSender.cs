@@ -13,11 +13,11 @@ namespace NextManComing_LoginServer
 	{
 		// Http 형식의 api를 호출해주는 함수.
 		// 다른 서버, 클라이언트와의 통신을 위해 사용.
-		public static async Task<Result_t> RequestHttp<Request_t, Result_t>(string address, string reqApi, Request_t reqPacket) where Result_t : new()
+		public static async Task<Result_t> RequestHttp<Request_t, Result_t>(string address, int port, string reqApi, Request_t reqPacket) where Result_t : new()
 		{
 			var resultData = new Result_t();
 
-			var api = address + reqApi;
+			string reqAddress = "http://" + address + ":" + port.ToString() + "/" + reqApi;
 			var requestJson = JsonConvert.SerializeObject(reqPacket);
 
 			var content = new ByteArrayContent(Encoding.UTF8.GetBytes(requestJson));
@@ -29,7 +29,7 @@ namespace NextManComing_LoginServer
 
 			try
 			{
-				response = await network.PostAsync(api, content).ConfigureAwait(false);
+				response = await network.PostAsync(reqAddress, content).ConfigureAwait(false);
 
 				if (response.IsSuccessStatusCode == false)
 				{

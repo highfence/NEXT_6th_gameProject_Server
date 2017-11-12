@@ -1,24 +1,26 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace NextManComing_LoginServer
 {
-    internal class LoginServerConfig
-    {
+	internal class LoginServerConfig
+	{
 		private static LoginServerConfig instance;
 
 		protected LoginServerConfig()
 		{
-			using (StreamReader r = new StreamReader("../../Common/ServerData.json"))
+			using (StreamReader r = new StreamReader("../../../../Common/ServerData.json"))
 			{
 				var configString = r.ReadToEnd();
 
 				var configJson = JObject.Parse(configString);
+
+				LoginServerAddress = configJson["LoginServerAddress"].ToString();
+				LoginServerPort = Convert.ToInt32(configJson["LoginServerPort"].ToString());
 
 				DBServerAddress = configJson["DBServerAddress"].ToString();
 				DBServerPort = Convert.ToInt32(configJson["DBServerPort"].ToString());
@@ -38,9 +40,13 @@ namespace NextManComing_LoginServer
 			return instance;
 		}
 
+		public string LoginServerAddress { get; private set; }
+		public int LoginServerPort { get; private set; }
+
 		public string DBServerAddress { get; private set; }
 		public int DBServerPort { get; private set; }
+
 		public string ManageServerAddress { get; private set; }
 		public int ManageServerPort { get; private set; }
-    }
+	}
 }

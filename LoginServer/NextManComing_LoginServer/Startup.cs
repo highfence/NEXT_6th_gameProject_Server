@@ -1,13 +1,13 @@
-﻿using Owin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Owin;
 using System.Web.Http;
 
-namespace NextManComing_DBServer
+namespace NextManComing_LoginServer
 {
-    class Startup
-    {
+	class Startup
+	{
 		public void Configuration(IAppBuilder appBuilder)
 		{
 			var config = new HttpConfiguration();

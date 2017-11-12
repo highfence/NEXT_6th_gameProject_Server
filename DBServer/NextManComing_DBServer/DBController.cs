@@ -18,7 +18,7 @@ namespace NextManComing_DBServer
 
 			var isUserExisted = await MongoDBManager.IsUserExist(req.UserId, req.EncryptedPw);
 
-			res.Result = (short)isUserExisted;
+			res.Result = (int)isUserExisted;
 
 			return res;
 		}
@@ -34,7 +34,7 @@ namespace NextManComing_DBServer
 
 			var result = await MongoDBManager.JoinUser(req.UserId, req.EncryptedPw);
 
-			res.Result = (short)result;
+			res.Result = (int)result;
 
 			return res;
 		}
@@ -50,7 +50,7 @@ namespace NextManComing_DBServer
 
 			var result = await AuthTokenManager.CheckAuthToken(req.UserId, req.Token);
 
-			res.Result = (short)result;
+			res.Result = (int)result;
 
 			return res;
 		}
@@ -71,11 +71,11 @@ namespace NextManComing_DBServer
 			catch (Exception e)
 			{
 				Console.WriteLine(e.Message);
-				res.Result = (short)ErrorCode.TokenRegistError;
+				res.Result = (int)ErrorCode.TokenRegistError;
 				return res;
 			}
 
-			res.Result = (short)ErrorCode.None;
+			res.Result = (int)ErrorCode.None;
 			return res;
 		}
 
@@ -90,9 +90,9 @@ namespace NextManComing_DBServer
 
 			// 유효한 값인지 우선 검사.
 			var validation = await AuthTokenManager.CheckAuthToken(req.UserId, req.Token);
-			if (validation != (short)ErrorCode.None)
+			if (validation != (int)ErrorCode.None)
 			{
-				res.Result = (short)validation;
+				res.Result = (int)validation;
 				return res;
 			}
 
@@ -104,11 +104,11 @@ namespace NextManComing_DBServer
 			catch (Exception e)
 			{
 				Console.WriteLine(e.Message);
-				res.Result = (short)ErrorCode.TokenDeleteError;
+				res.Result = (int)ErrorCode.TokenDeleteError;
 				return res;
 			}
 
-			res.Result = (short)ErrorCode.None;
+			res.Result = (int)ErrorCode.None;
 			return res;
 		}
 

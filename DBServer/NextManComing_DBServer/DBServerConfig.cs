@@ -6,13 +6,13 @@ using System.Text;
 
 namespace NextManComing_DBServer
 {
-    internal class DBServerConfig
-    {
+	internal class DBServerConfig
+	{
 		private static DBServerConfig instance;
 
 		protected DBServerConfig()
 		{
-			using (StreamReader r = new StreamReader("../../Common/ServerData.json"))
+			using (StreamReader r = new StreamReader("../../../../Common/ServerData.json"))
 			{
 				var configString = r.ReadToEnd();
 

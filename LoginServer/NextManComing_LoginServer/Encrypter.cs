@@ -5,8 +5,8 @@ using System.Text;
 
 namespace NextManComing_LoginServer
 {
-    internal class Encrypter
-    {
+	internal class Encrypter
+	{
 		// 출처 : http://codingcoding.tistory.com/139
 		public static string EncryptString(string message)
 		{

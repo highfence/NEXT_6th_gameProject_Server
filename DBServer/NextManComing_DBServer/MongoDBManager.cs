@@ -13,8 +13,8 @@ namespace NextManComing_DBServer
 		public string Pw;
 	}
 
-    internal static class MongoDBManager
-    {
+	internal static class MongoDBManager
+	{
 		// 해당하는 유저의 정보가 MongoDB에 있는지 확인해주는 메소드.
 		public static async Task<ErrorCode> IsUserExist(string userId, string encryptedPw)
 		{
@@ -89,5 +89,5 @@ namespace NextManComing_DBServer
 		{
 			return GetMongoDatabase(dbName).GetCollection<T>(collectionName);
 		}
-    }
+	}
 }

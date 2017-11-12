@@ -7,7 +7,7 @@ namespace NextManComing_DBServer
 	// 로그인 서버와 통신하기 위해 정의된 패킷 구조체들.
 	public static class LoginServerPacket
 	{
-		public struct UserValidationReq 
+		public struct UserValidationReq
 		{
 			public string UserId;
 			public string EncryptedPw;
@@ -15,7 +15,7 @@ namespace NextManComing_DBServer
 
 		public struct UserValidationRes
 		{
-			public short Result;
+			public int Result;
 		}
 
 		public struct UserJoinInReq
@@ -26,7 +26,7 @@ namespace NextManComing_DBServer
 
 		public struct UserJoinInRes
 		{
-			public short Result;
+			public int Result;
 		}
 
 		public struct TokenValidationReq
@@ -37,7 +37,7 @@ namespace NextManComing_DBServer
 
 		public struct TokenValidationRes
 		{
-			public short Result;
+			public int Result;
 		}
 
 		public struct RegistTokenReq
@@ -48,7 +48,7 @@ namespace NextManComing_DBServer
 
 		public struct RegistTokenRes
 		{
-			public short Result;
+			public int Result;
 		}
 
 		public struct DeleteTokenReq
@@ -59,7 +59,7 @@ namespace NextManComing_DBServer
 
 		public struct DeleteTokenRes
 		{
-			public short Result;
+			public int Result;
 		}
 
 	}
