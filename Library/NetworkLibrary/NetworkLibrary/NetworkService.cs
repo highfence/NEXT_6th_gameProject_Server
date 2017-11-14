@@ -22,12 +22,13 @@ namespace NetworkLibrary
 			// TODO :: 서버 config 클래스 구현.
 			const int maxConnections = 10000;
 			const int bufferSize = 1024;
-			const int preAllocCount = 1;
+			const int preAllocCount = 2;
 
 			receiveEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
 			sendEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
 
 			bufferManager = new BufferManager(maxConnections * bufferSize * preAllocCount, bufferSize);
+			bufferManager.InitBuffer();
 
 			SocketAsyncEventArgs arg;
 
@@ -43,7 +44,6 @@ namespace NetworkLibrary
 
 					receiveEventArgsPool.Push(arg);
 				}
-
 
 				// Send Pool 생성
 				{
@@ -78,18 +78,21 @@ namespace NetworkLibrary
 		public void Listen(string host, int port, int backlog)
 		{
 			clientListener = new ClientListener();
-			clientListener.OnClientConnected += OnClientConnected;
+			clientListener.OnClientConnected += OnNewClientConnected;
 			clientListener.StartListen(host, port, backlog);
 		}
 
-		private void OnClientConnected(Socket clientSocket, object token)
+		private void OnNewClientConnected(Socket clientSocket, object token)
 		{
 			var receiveArgs = receiveEventArgsPool.Pop();
 			var sendArgs = sendEventArgsPool.Pop();
 
-			var userToken = new ClientSession();
-			userToken.SetEventArgs(receiveArgs, sendArgs);
-			receiveArgs.UserToken = userToken;
+			var session = new ClientSession();
+			receiveArgs.UserToken = session;
+			sendArgs.UserToken = session;
+
+			session.SetEventArgs(receiveArgs, sendArgs);
+			session.Socket = clientSocket;
 
 			OnSessionCreated?.Invoke(receiveArgs.UserToken as ClientSession);
 
@@ -99,14 +102,18 @@ namespace NetworkLibrary
 
 		private void BeginReceive(Socket clientSocket, SocketAsyncEventArgs receiveArgs, SocketAsyncEventArgs sendArgs)
 		{
-			var session = receiveArgs.UserToken as ClientSession;
-			session.socket = clientSocket;
-
-			// 비동기 수신 시작.
-			bool pending = clientSocket.ReceiveAsync(receiveArgs);
-			if (pending == false)
+			try
 			{
-				ProcessReceive(receiveArgs);
+				// 비동기 수신 시작.
+				bool pending = clientSocket.ReceiveAsync(receiveArgs);
+				if (pending == false)
+				{
+					ProcessReceive(receiveArgs);
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("BeginReceive failed. Message : " + e.Message);
 			}
 		}
 
@@ -119,7 +126,7 @@ namespace NetworkLibrary
 				session.OnReceive(e.Buffer, e.Offset, e.BytesTransferred);
 
 				// 다음 메시지 수신.
-				var pending = session.socket.ReceiveAsync(e);
+				var pending = session.Socket.ReceiveAsync(e);
 				if (pending == false)
 				{
 					ProcessReceive(e);

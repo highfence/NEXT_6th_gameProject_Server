@@ -197,16 +197,6 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "LogicLibrary/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/LogicLibrary.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/LogicLibrary.dll": {}
-        }
-      },
       "NetworkLibrary/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -677,11 +667,6 @@
         "netstandard.library.nuspec"
       ]
     },
-    "LogicLibrary/1.0.0": {
-      "type": "project",
-      "path": "../../../Library/LogicLibrary/LogicLibrary/LogicLibrary.csproj",
-      "msbuildProject": "../../../Library/LogicLibrary/LogicLibrary/LogicLibrary.csproj"
-    },
     "NetworkLibrary/1.0.0": {
       "type": "project",
       "path": "../../../Library/NetworkLibrary/NetworkLibrary/NetworkLibrary.csproj",
@@ -690,13 +675,12 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "LogicLibrary >= 1.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "NetworkLibrary >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Highfence\\.nuget\\packages\\": {},
+    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -705,17 +689,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Dev\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
       "projectName": "ServerHost",
-      "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
-      "packagesPath": "C:\\Users\\Highfence\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
+      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
+      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Highfence\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -728,11 +712,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
-              "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
-            },
-            "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj": {
-              "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj"
+            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
+              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
             }
           }
         }

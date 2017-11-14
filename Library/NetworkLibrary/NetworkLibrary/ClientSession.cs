@@ -7,7 +7,7 @@ namespace NetworkLibrary
 {
     public class ClientSession
     {
-		public Socket socket { get; set; }
+		public Socket Socket { get; set; }
 
 		public SocketAsyncEventArgs receiveEventArgs { get; private set; }
 		public SocketAsyncEventArgs sendEventArgs { get; private set; }
@@ -64,7 +64,7 @@ namespace NetworkLibrary
 				Array.Copy(sendPacket.Buffer, 0, sendEventArgs.Buffer, sendEventArgs.Offset, sendPacket.Position);
 
 				// 비동기 전송 시작.
-				bool pending = socket.SendAsync(sendEventArgs);
+				bool pending = Socket.SendAsync(sendEventArgs);
 				if (pending == false)
 				{
 					ProcessSend(sendEventArgs);

@@ -38,7 +38,6 @@ namespace NetworkLibrary
 		// <returns>true if the buffer was successfully set, else false</returns>
 		public bool SetBuffer(SocketAsyncEventArgs args)
 		{
-
 			if (m_freeIndexPool.Count > 0)
 			{
 				args.SetBuffer(m_buffer, m_freeIndexPool.Pop(), m_bufferSize);
