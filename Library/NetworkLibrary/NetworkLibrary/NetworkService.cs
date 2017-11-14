@@ -84,6 +84,8 @@ namespace NetworkLibrary
 
 		private void OnNewClientConnected(Socket clientSocket, object token)
 		{
+			Console.WriteLine($"New Client Connected. Socket handle({clientSocket.Handle})");
+
 			var receiveArgs = receiveEventArgsPool.Pop();
 			var sendArgs = sendEventArgsPool.Pop();
 

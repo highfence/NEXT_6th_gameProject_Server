@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using MessagePack;
 
 namespace NetworkLibrary
 {
@@ -12,13 +13,14 @@ namespace NetworkLibrary
 		public SocketAsyncEventArgs receiveEventArgs { get; private set; }
 		public SocketAsyncEventArgs sendEventArgs { get; private set; }
 
-		MessageResolver messageResolver;
+		private ByteReader byteReader;
 
 		Queue<Packet> sendQueue;
 
 		public ClientSession()
 		{
 			sendQueue = new Queue<Packet>();
+			byteReader = new ByteReader();
 		}
 
 		public void SetEventArgs(SocketAsyncEventArgs receiveEventArgs, SocketAsyncEventArgs sendEventArgs)
@@ -87,13 +89,14 @@ namespace NetworkLibrary
 
 		internal void OnReceive(byte[] buffer, int offset, int bytesTransferred)
 		{
-			messageResolver.OnReceive(buffer, offset, bytesTransferred, OnMessageCompleted);
+			byteReader.OnReceive(buffer, offset, bytesTransferred, OnMessagePacked);
 		}
 
-		private void OnMessageCompleted(ArraySegment<byte> buffer)
+		private void OnMessagePacked(ArraySegment<byte> buffer)
 		{
-			Console.WriteLine("OnMessageCompleted");
-			throw new NotImplementedException();
+			var req = MessagePackSerializer.Deserialize<LoginReq>(buffer);
+
+			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
 		}
 
 		internal void Close()
