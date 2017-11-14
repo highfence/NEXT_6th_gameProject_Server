@@ -5,4 +5,9 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\LogicLibrary\LogicLibrary\LogicLibrary.csproj" />
+    <ProjectReference Include="..\..\..\Library\NetworkLibrary\NetworkLibrary\NetworkLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

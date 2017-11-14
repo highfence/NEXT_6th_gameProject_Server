@@ -196,6 +196,26 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "LogicLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/LogicLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LogicLibrary.dll": {}
+        }
+      },
+      "NetworkLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/NetworkLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NetworkLibrary.dll": {}
+        }
       }
     }
   },
@@ -656,11 +676,23 @@
         "netstandard.library.2.0.0.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "LogicLibrary/1.0.0": {
+      "type": "project",
+      "path": "../../../Library/LogicLibrary/LogicLibrary/LogicLibrary.csproj",
+      "msbuildProject": "../../../Library/LogicLibrary/LogicLibrary/LogicLibrary.csproj"
+    },
+    "NetworkLibrary/1.0.0": {
+      "type": "project",
+      "path": "../../../Library/NetworkLibrary/NetworkLibrary/NetworkLibrary.csproj",
+      "msbuildProject": "../../../Library/NetworkLibrary/NetworkLibrary/NetworkLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "Microsoft.NETCore.App >= 2.0.0"
+      "LogicLibrary >= 1.0.0",
+      "Microsoft.NETCore.App >= 2.0.0",
+      "NetworkLibrary >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -695,7 +727,14 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
+              "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
+            },
+            "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj": {
+              "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary\\LogicLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

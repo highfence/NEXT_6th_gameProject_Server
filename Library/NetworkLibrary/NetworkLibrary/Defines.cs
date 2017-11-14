@@ -4,8 +4,8 @@ using System.Text;
 
 namespace NetworkLibrary
 {
-    public class SocketOption
+    internal class Defines
     {
-        public bool NoDelay = false;
+		public static readonly int HeaderSize = 4;
     }
 }
