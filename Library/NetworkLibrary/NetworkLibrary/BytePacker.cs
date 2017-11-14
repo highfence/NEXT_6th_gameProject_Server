@@ -5,9 +5,9 @@ using MessagePack;
 
 namespace NetworkLibrary
 {
-	public delegate void CompletedMessageCallback(ArraySegment<byte> buffer);
+	public delegate void CompletedMessageCallback(int packetId, ArraySegment<byte> buffer);
 
-    internal class ByteReader
+    internal class BytePacker
     {
 		private int messageSize;
 		private byte[] messageBuffer = new byte[1024];
@@ -16,7 +16,7 @@ namespace NetworkLibrary
 		// 패킷 하나를 완성한 뒤에는 0으로 초기화 시켜주어야 한다.
 		private int currentPosition;
 
-		public ByteReader()
+		public BytePacker()
 		{
 			messageSize = 0;
 			currentPosition = 0;
@@ -36,6 +36,7 @@ namespace NetworkLibrary
 			while (remainBytes > 0)
 			{
 				var isCompleted = false;
+				var header = new PacketHeader();
 
 				if (currentPosition < Defines.HeaderSize)
 				{
@@ -50,7 +51,7 @@ namespace NetworkLibrary
 					}
 
 					// 헤더 하나를 온전히 읽어왔으므로 메시지의 사이를 구한다.
-					var header = GetPacketHeader();
+					header = GetPacketHeader();
 
 					messageSize = header.BodySize;
 
@@ -68,7 +69,7 @@ namespace NetworkLibrary
 
 					ClearBuffer();
 
-					callback(new ArraySegment<byte>(cloneBuffer, 0, cloneBuffer.Length));
+					callback(header.PacketId, new ArraySegment<byte>(cloneBuffer, 0, cloneBuffer.Length));
 				}
 			}
 		}
