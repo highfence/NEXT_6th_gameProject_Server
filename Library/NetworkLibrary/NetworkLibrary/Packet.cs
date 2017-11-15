@@ -10,6 +10,15 @@ namespace NetworkLibrary
 		public ClientSession Owner { get; private set; }
 		public int PacketId { get; private set; }
 		public byte[] Body { get; private set; }
+
+		public void SetInfo(ClientSession owner, int packetId, ArraySegment<byte> buffer)
+		{
+			Owner = owner;
+			PacketId = PacketId;
+			Body = new byte[buffer.Count];
+
+			Array.Copy(Body, buffer.Array, buffer.Array.Length);
+		}
     }
 
 	[MessagePackObject]
@@ -28,5 +37,10 @@ namespace NetworkLibrary
 		public string UserId;
 		[Key(1)]
 		public Int64 Token;
+	}
+
+	public enum PacketId
+	{
+		LoginReq = 101
 	}
 }

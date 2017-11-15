@@ -37,7 +37,7 @@ namespace NetworkLibrary
 		/// IO스레드에서 전달한 패킷을 보관한다.
 		/// </summary>
 		/// <param name="msg"></param>
-		void Enqueue(Packet msg)
+		public void Enqueue(Packet msg)
 		{
 			lock (this.write)
 			{

@@ -13,6 +13,8 @@ namespace NetworkLibrary
 		SocketAsyncEventArgsPool sendEventArgsPool;
 
 		BufferManager bufferManager;
+		UserManager userManager;
+		PacketProcessor packetProcessor;
 
 		public delegate void SessionHandler(ClientSession session);
 		public SessionHandler OnSessionCreated { get; set; }
@@ -29,6 +31,11 @@ namespace NetworkLibrary
 
 			bufferManager = new BufferManager(maxConnections * bufferSize * preAllocCount, bufferSize);
 			bufferManager.InitBuffer();
+
+			userManager = new UserManager();
+
+			packetProcessor = new PacketProcessor(this, userManager);
+			packetProcessor.StartLogic();
 
 			SocketAsyncEventArgs arg;
 
@@ -89,7 +96,7 @@ namespace NetworkLibrary
 			var receiveArgs = receiveEventArgsPool.Pop();
 			var sendArgs = sendEventArgsPool.Pop();
 
-			var session = new ClientSession();
+			var session = new ClientSession(packetProcessor);
 			receiveArgs.UserToken = session;
 			sendArgs.UserToken = session;
 

@@ -13,13 +13,16 @@ namespace NetworkLibrary
 		public SocketAsyncEventArgs sendEventArgs { get; private set; }
 
 		private BytePacker bytePacker;
+		private PacketProcessor packetProcessor;
 
 		Queue<Packet> sendQueue;
 
-		public ClientSession()
+		public ClientSession(PacketProcessor processor)
 		{
 			sendQueue = new Queue<Packet>();
 			bytePacker = new BytePacker();
+
+			packetProcessor = processor;
 		}
 
 		public void SetEventArgs(SocketAsyncEventArgs receiveEventArgs, SocketAsyncEventArgs sendEventArgs)
@@ -95,6 +98,8 @@ namespace NetworkLibrary
 
 		private void OnMessagePacked(int packetId, ArraySegment<byte> buffer)
 		{
+			packetProcessor.OnMessage(this, packetId, buffer);
+
 			var req = MessagePackSerializer.Deserialize<LoginReq>(buffer);
 
 			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
