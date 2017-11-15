@@ -60,7 +60,7 @@ namespace NetworkLibrary
 			}
 		}
 
-		private void ListenThread(object obj)
+		private void ListenThread()
 		{
 			// accpet 처리 제어를 위해 이벤트 객체 생성.
 			// 초기 상태는 false 상태.

@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MessagePack;
 
 namespace NetworkLibrary
 {
-	public class Packet
+    public class Packet
+    {
+		public ClientSession Owner { get; private set; }
+		public int PacketId { get; private set; }
+		public byte[] Body { get; private set; }
+    }
+
+	[MessagePackObject]
+	public class PacketHeader
 	{
-		public int Position { get; internal set; }
-		public Byte[] Buffer { get; internal set; }
+		[Key(0)]
+		public int PacketId;
+		[Key(1)]
+		public int BodySize;
+	}
 
-		internal void CopyTo(Packet packet)
-		{
-			throw new NotImplementedException();
-		}
-
-		internal void RecordSize()
-		{
-			throw new NotImplementedException();
-		}
+	[MessagePackObject]
+	public class LoginReq
+	{
+		[Key(0)]
+		public string UserId;
+		[Key(1)]
+		public Int64 Token;
 	}
 }
