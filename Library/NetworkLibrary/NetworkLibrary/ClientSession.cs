@@ -93,16 +93,20 @@ namespace NetworkLibrary
 
 		internal void OnReceive(byte[] buffer, int offset, int bytesTransferred)
 		{
+			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
+
 			bytePacker.OnReceive(buffer, offset, bytesTransferred, OnMessagePacked);
 		}
 
 		private void OnMessagePacked(int packetId, ArraySegment<byte> buffer)
 		{
-			packetProcessor.OnMessage(this, packetId, buffer);
+			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
 
 			var req = MessagePackSerializer.Deserialize<LoginReq>(buffer);
 
 			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
+
+			packetProcessor.OnMessage(this, packetId, buffer);
 		}
 
 		internal void Close()

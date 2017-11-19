@@ -26,6 +26,8 @@ namespace NetworkLibrary
 
 		internal void OnReceive(byte[] buffer, int offset, int bytesTransferred, CompletedMessageCallback callback)
 		{
+			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
+
 			// 이번 receive로 읽어오게 될 바이트 수.
 			remainBytes = bytesTransferred;
 

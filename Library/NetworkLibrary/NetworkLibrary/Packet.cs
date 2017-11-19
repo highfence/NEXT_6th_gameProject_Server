@@ -14,10 +14,10 @@ namespace NetworkLibrary
 		public void SetInfo(ClientSession owner, int packetId, ArraySegment<byte> buffer)
 		{
 			Owner = owner;
-			PacketId = PacketId;
+			PacketId = packetId;
 			Body = new byte[buffer.Count];
 
-			Array.Copy(Body, buffer.Array, buffer.Array.Length);
+			Array.Copy(buffer.Array, Body, buffer.Array.Length);
 		}
     }
 
