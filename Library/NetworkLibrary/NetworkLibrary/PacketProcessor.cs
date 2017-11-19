@@ -13,8 +13,6 @@ namespace NetworkLibrary
 
 		public PacketProcessor(NetworkService service, UserManager userManager)
 		{
-			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
-
 			networkService = service;
 			this.userManager = userManager;
 
@@ -24,7 +22,6 @@ namespace NetworkLibrary
 
 		public void StartLogic()
 		{
-			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
 
 			Thread logicThread = new Thread(LogicThread);
 			logicThread.Start();
@@ -32,8 +29,6 @@ namespace NetworkLibrary
 
 		private void LogicThread()
 		{
-			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
-
 			while (true)
 			{
 				logicEvent.WaitOne();
@@ -44,8 +39,6 @@ namespace NetworkLibrary
 
 		private void DispatchAll(Queue<Packet> messageQueue)
 		{
-			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
-
 			while (messageQueue.Count > 0)
 			{
 				var message = messageQueue.Dequeue();
@@ -60,8 +53,7 @@ namespace NetworkLibrary
 		// 받은 패킷에 이벤트를 걸어놓았던 함수들을 모두 실행시킨다.
 		private void InvokePacketEvents(Packet receivedPacket)
 		{
-			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
-
+			// 여기에 로직 구현하면 된다.
 			switch ((PacketId)receivedPacket.PacketId)
 			{
 				case PacketId.LoginReq:
@@ -73,8 +65,6 @@ namespace NetworkLibrary
 
 		internal void OnMessage(ClientSession clientSession, int packetId, ArraySegment<byte> buffer)
 		{
-			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
-
 			var packet = new Packet();
 			packet.SetInfo(clientSession, packetId, buffer);
 
