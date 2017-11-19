@@ -9,26 +9,27 @@ namespace NetworkLibrary
     {
 		public Socket Socket { get; set; }
 
-		public SocketAsyncEventArgs receiveEventArgs { get; private set; }
-		public SocketAsyncEventArgs sendEventArgs { get; private set; }
+		public SocketAsyncEventArgs ReceiveEventArgs { get; private set; }
+		public SocketAsyncEventArgs SendEventArgs	 { get; private set; }
 
-		private BytePacker bytePacker;
-		private PacketProcessor packetProcessor;
+		BytePacker		    bytePacker;
+		IPacketLogicHandler packetLogicHandler;
 
 		Queue<Packet> sendQueue;
 
-		public ClientSession(PacketProcessor processor)
+		public ClientSession(IPacketLogicHandler packetLogicHandler)
 		{
-			sendQueue = new Queue<Packet>();
+			sendQueue  = new Queue<Packet>();
 			bytePacker = new BytePacker();
 
-			packetProcessor = processor;
+			this.packetLogicHandler = packetLogicHandler;
 		}
 
+		// 해당 세션에서 사용할 EventArgs를 풀에서 받아와 세팅해주는 메소드.
 		public void SetEventArgs(SocketAsyncEventArgs receiveEventArgs, SocketAsyncEventArgs sendEventArgs)
 		{
-			this.receiveEventArgs = receiveEventArgs;
-			this.sendEventArgs = sendEventArgs;
+			ReceiveEventArgs = receiveEventArgs;
+			SendEventArgs	 = sendEventArgs;
 		}
 
 		public void Send(Packet packet)
@@ -91,6 +92,8 @@ namespace NetworkLibrary
 			}
 		}
 
+		// 해당 세션이 메시지를 수신하였을 때를 핸들링하는 메소드.
+		// 멤버 바이트 패커에게 받은 데이터 처리를 부탁한다.
 		internal void OnReceive(byte[] buffer, int offset, int bytesTransferred)
 		{
 			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
@@ -98,6 +101,8 @@ namespace NetworkLibrary
 			bytePacker.OnReceive(buffer, offset, bytesTransferred, OnMessagePacked);
 		}
 
+		// 바이트 패커가 받은 데이터 처리를 끝냈을 때 불러주는 콜백 메소드.
+		// 해당 데이터로 패킷을 만들고, 이를 처리할 수 있도록 로직 핸들러에게 넣어준다.
 		private void OnMessagePacked(int packetId, ArraySegment<byte> buffer)
 		{
 			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
@@ -106,9 +111,13 @@ namespace NetworkLibrary
 
 			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
 
-			packetProcessor.OnMessage(this, packetId, buffer);
+			var packet = new Packet(this, packetId, buffer); 
+
+			packetLogicHandler.InsertPacket(packet);
 		}
 
+		// TODO :: 소켓 등의 처리를 해야하기도 할 것 같고.
+		// 근데 서버라서 안해도 될 것 같고.
 		internal void Close()
 		{
 			Console.WriteLine("Close");

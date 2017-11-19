@@ -1,5 +1,6 @@
 ﻿using System;
 using NetworkLibrary;
+using LogicLibrary;
 using System.Collections.Generic;
 
 namespace ServerHost
@@ -8,9 +9,12 @@ namespace ServerHost
     {
 		static void Main(string[] args)
 		{
-			var service = new NetworkService();
+			var service		   = new NetworkService();
+			var userManager	   = new UserManager();
+			var logicProcessor = new LogicProcessor(service, userManager);
+			logicProcessor.StartLogic();
 
-			service.Initialize();
+			service.Initialize(logicProcessor, userManager);
 			service.Listen("0.0.0.0", 23452, 100);
 
 			Console.WriteLine($"Server Initialized. Port(23452)");

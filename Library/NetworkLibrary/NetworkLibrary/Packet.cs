@@ -11,7 +11,14 @@ namespace NetworkLibrary
 		public int PacketId { get; private set; }
 		public byte[] Body { get; private set; }
 
-		public void SetInfo(ClientSession owner, int packetId, ArraySegment<byte> buffer)
+		public Packet()
+		{
+			Owner = null;
+			PacketId = 0;
+			Body = null;
+		}
+
+		public Packet(ClientSession owner, int packetId, ArraySegment<byte> buffer)
 		{
 			Owner = owner;
 			PacketId = packetId;

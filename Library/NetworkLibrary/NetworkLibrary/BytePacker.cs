@@ -9,7 +9,7 @@ namespace NetworkLibrary
 
     internal class BytePacker
     {
-		private int messageSize;
+		private int    messageSize;
 		private byte[] messageBuffer = new byte[1024];
 
 		// 현재 진행중인 버퍼의 인덱스를 가리키는 변수.
@@ -24,6 +24,7 @@ namespace NetworkLibrary
 			remainBytes = 0;
 		}
 
+		// 데이터가 도착했을 때 이를 읽어주는 메소드.
 		internal void OnReceive(byte[] buffer, int offset, int bytesTransferred, CompletedMessageCallback callback)
 		{
 			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
@@ -76,13 +77,6 @@ namespace NetworkLibrary
 			}
 		}
 
-		private void ClearBuffer()
-		{
-			Array.Clear(messageBuffer, 0, messageBuffer.Length);
-
-			currentPosition = 0;
-			messageSize = 0;
-		}
 
 		// 버퍼의 첫부분을 떼다가 헤더를 만들어 준다.
 		private PacketHeader GetPacketHeader()
@@ -148,6 +142,15 @@ namespace NetworkLibrary
 			}
 
 			return true;
+		}
+
+		// 내부 버퍼 초기화 메소드.
+		private void ClearBuffer()
+		{
+			Array.Clear(messageBuffer, 0, messageBuffer.Length);
+
+			currentPosition = 0;
+			messageSize     = 0;
 		}
     }
 }

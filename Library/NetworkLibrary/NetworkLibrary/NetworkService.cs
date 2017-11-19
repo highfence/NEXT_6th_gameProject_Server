@@ -12,31 +12,33 @@ namespace NetworkLibrary
 		SocketAsyncEventArgsPool receiveEventArgsPool;
 		SocketAsyncEventArgsPool sendEventArgsPool;
 
-		BufferManager bufferManager;
-		UserManager userManager;
-		PacketProcessor packetProcessor;
+		BufferManager		bufferManager;
+		IUserManager		userManager;
+		IPacketLogicHandler logicHandler;
 
 		public delegate void SessionHandler(ClientSession session);
 		public SessionHandler OnSessionCreated { get; set; }
 
-		public void Initialize()
+		public void Initialize(IPacketLogicHandler logicHandler, IUserManager userManager)
 		{
 			// TODO :: 서버 config 클래스 구현.
 			const int maxConnections = 10000;
 			const int bufferSize = 1024;
 			const int preAllocCount = 2;
 
-			receiveEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
-			sendEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
-
 			bufferManager = new BufferManager(maxConnections * bufferSize * preAllocCount, bufferSize);
 			bufferManager.InitBuffer();
 
-			userManager = new UserManager();
+			receiveEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
+			sendEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
+			MakeEventPools(maxConnections);
 
-			packetProcessor = new PacketProcessor(this, userManager);
-			packetProcessor.StartLogic();
+			this.userManager = userManager;
+			this.logicHandler = logicHandler;
+		}
 
+		private void MakeEventPools(int maxConnections)
+		{
 			SocketAsyncEventArgs arg;
 
 			for (var i = 0; i < maxConnections; ++i)
@@ -94,11 +96,11 @@ namespace NetworkLibrary
 			Console.WriteLine($"New Client Connected. Socket handle({clientSocket.Handle})");
 
 			var receiveArgs = receiveEventArgsPool.Pop();
-			var sendArgs = sendEventArgsPool.Pop();
+			var sendArgs	= sendEventArgsPool.Pop();
 
-			var session = new ClientSession(packetProcessor);
+			var session = new ClientSession(logicHandler);
 			receiveArgs.UserToken = session;
-			sendArgs.UserToken = session;
+			sendArgs.UserToken	  = session;
 
 			session.SetEventArgs(receiveArgs, sendArgs);
 			session.Socket = clientSocket;

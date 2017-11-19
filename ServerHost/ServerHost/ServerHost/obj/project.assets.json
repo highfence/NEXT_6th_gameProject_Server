@@ -415,6 +415,19 @@
           "lib/netstandard1.0/System.ValueTuple.dll": {}
         }
       },
+      "LogicLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "NetworkLibrary": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LogicLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LogicLibrary.dll": {}
+        }
+      },
       "NetworkLibrary/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -1540,7 +1553,7 @@
       ]
     },
     "System.Runtime.Serialization.Primitives/4.3.0": {
-      "sha512": "Gig2y8ampiMS70qhj7JKcnf5PeOuyT0fxAdktVdWsdMCLZISIt0TaynJHrpsiEyOF7KzBFEEHRRnBk3l1ltjeg==",
+      "sha512": "Wz+0KOukJGAlXjtKr+5Xpuxf8+c8739RI1C+A2BoQZT+wMCCoMDDdO8/4IRHfaVINqL78GO8dW8G2lW/e45Mcw==",
       "type": "package",
       "path": "system.runtime.serialization.primitives/4.3.0",
       "files": [
@@ -1772,6 +1785,11 @@
         "system.valuetuple.nuspec"
       ]
     },
+    "LogicLibrary/1.0.0": {
+      "type": "project",
+      "path": "../../../Library/LogicLibrary/LogicLibrary.csproj",
+      "msbuildProject": "../../../Library/LogicLibrary/LogicLibrary.csproj"
+    },
     "NetworkLibrary/1.0.0": {
       "type": "project",
       "path": "../../../Library/NetworkLibrary/NetworkLibrary/NetworkLibrary.csproj",
@@ -1780,6 +1798,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "LogicLibrary >= 1.0.0",
       "MessagePack >= 1.7.2",
       "MessagePackAnalyzer >= 1.6.0",
       "Microsoft.NETCore.App >= 2.0.0",
@@ -1787,7 +1806,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Highfence\\.nuget\\packages\\": {},
+    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -1796,17 +1815,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Dev\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
       "projectName": "ServerHost",
-      "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
-      "packagesPath": "C:\\Users\\Highfence\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
+      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
+      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Highfence\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1819,8 +1838,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
-              "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
+            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
+              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
+            },
+            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
+              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
             }
           }
         }
@@ -1840,7 +1862,7 @@
           },
           "Microsoft.NETCore.App": {
             "target": "Package",
-            "version": "2.0.0",
+            "version": "2.0",
             "autoReferenced": true
           },
           "MessagePack": {

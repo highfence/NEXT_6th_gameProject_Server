@@ -1039,7 +1039,7 @@
       ]
     },
     "System.Runtime.Serialization.Primitives/4.3.0": {
-      "sha512": "Gig2y8ampiMS70qhj7JKcnf5PeOuyT0fxAdktVdWsdMCLZISIt0TaynJHrpsiEyOF7KzBFEEHRRnBk3l1ltjeg==",
+      "sha512": "Wz+0KOukJGAlXjtKr+5Xpuxf8+c8739RI1C+A2BoQZT+wMCCoMDDdO8/4IRHfaVINqL78GO8dW8G2lW/e45Mcw==",
       "type": "package",
       "path": "system.runtime.serialization.primitives/4.3.0",
       "files": [
@@ -1280,7 +1280,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Highfence\\.nuget\\packages\\": {},
+    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -1289,17 +1289,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
+      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
       "projectName": "NetworkLibrary",
-      "projectPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
-      "packagesPath": "C:\\Users\\Highfence\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\obj\\",
+      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
+      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
+      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Highfence\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
