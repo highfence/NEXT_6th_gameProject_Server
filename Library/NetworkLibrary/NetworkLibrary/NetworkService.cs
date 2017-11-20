@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NetworkLibrary
 {
@@ -12,6 +13,7 @@ namespace NetworkLibrary
 		SocketAsyncEventArgsPool receiveEventArgsPool;
 		SocketAsyncEventArgsPool sendEventArgsPool;
 
+		HttpNetwork			httpNetwork;
 		BufferManager		bufferManager;
 		IUserManager		userManager;
 		IPacketLogicHandler logicHandler;
@@ -37,6 +39,13 @@ namespace NetworkLibrary
 			this.logicHandler = logicHandler;
 		}
 
+		// Http Post를 보내는 메소드.
+		public async Task<T> HttpPost<T>(string postUri, byte[] postData)
+		{
+			return await httpNetwork.HttpPostRequest<T>(postUri, postData);
+		}
+
+		// 통신에 사용할 이벤트 풀을 생성하는 메소드.
 		private void MakeEventPools(int maxConnections)
 		{
 			SocketAsyncEventArgs arg;
@@ -84,6 +93,7 @@ namespace NetworkLibrary
 			throw new ArgumentException("OnReceivedCompleted error. Last operation on the socket was not a receive.");
 		}
 
+		// clientListener를 통해 새로운 클라이언트를 받기 시작하는 메소드.
 		public void Listen(string host, int port, int backlog)
 		{
 			clientListener = new ClientListener();
@@ -91,6 +101,7 @@ namespace NetworkLibrary
 			clientListener.StartListen(host, port, backlog);
 		}
 
+		// 새로운 클라이언트가 접속하였을 때 호출되는 메소드.
 		private void OnNewClientConnected(Socket clientSocket, object token)
 		{
 			Console.WriteLine($"New Client Connected. Socket handle({clientSocket.Handle})");

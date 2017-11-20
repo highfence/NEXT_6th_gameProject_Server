@@ -26,7 +26,16 @@ namespace NetworkLibrary
 
 			Array.Copy(buffer.Array, Body, buffer.Array.Length);
 		}
-    }
+
+		public Packet(ClientSession owner, int packetId, byte[] serializedPacketBody)
+		{
+			Owner = owner;
+			PacketId = packetId;
+			Body = new byte[serializedPacketBody.Length];
+
+			Array.Copy(serializedPacketBody, Body, serializedPacketBody.Length);
+		}
+	}
 
 	[MessagePackObject]
 	public class PacketHeader
@@ -46,8 +55,16 @@ namespace NetworkLibrary
 		public Int64 Token;
 	}
 
+	[MessagePackObject]
+	public class LoginRes
+	{
+		[Key(0)]
+		public int Result;
+	}
+
 	public enum PacketId
 	{
-		LoginReq = 101
+		LoginReq = 101,
+		LoginRes = 102
 	}
 }

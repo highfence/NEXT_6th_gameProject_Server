@@ -10,9 +10,9 @@ namespace NextManComing_DBServer
 		// 해당 유저가 등록되어 있는지 확인하는 메소드.
 		[Route("DB/UserValidation")]
 		[HttpPost]
-		public async Task<LoginServerPacket.UserValidationRes> GetUserValidation(LoginServerPacket.UserValidationReq req)
+		public async Task<HttpPacket.UserValidationRes> GetUserValidation(HttpPacket.UserValidationReq req)
 		{
-			var res = new LoginServerPacket.UserValidationRes();
+			var res = new HttpPacket.UserValidationRes();
 
 			Console.WriteLine($"UserValidation Request. Id : {req.UserId}, Pw : {req.EncryptedPw}");
 
@@ -26,9 +26,9 @@ namespace NextManComing_DBServer
 		// 유저를 등록하는 메소드.
 		[Route("DB/AddUser")]
 		[HttpPost]
-		public async Task<LoginServerPacket.UserJoinInRes> AddUser(LoginServerPacket.UserJoinInReq req)
+		public async Task<HttpPacket.UserJoinInRes> AddUser(HttpPacket.UserJoinInReq req)
 		{
-			var res = new LoginServerPacket.UserJoinInRes();
+			var res = new HttpPacket.UserJoinInRes();
 
 			Console.WriteLine($"AddUser Request. Id : {req.UserId}, Pw : {req.EncryptedPw}");
 
@@ -42,9 +42,9 @@ namespace NextManComing_DBServer
 		// 유저의 토큰 값이 일치하는지 확인해주는 메소드.
 		[Route("DB/TokenValidation")]
 		[HttpPost]
-		public async Task<LoginServerPacket.TokenValidationRes> GetTokenValidation(LoginServerPacket.TokenValidationReq req)
+		public async Task<HttpPacket.TokenValidationRes> GetTokenValidation(HttpPacket.TokenValidationReq req)
 		{
-			var res = new LoginServerPacket.TokenValidationRes();
+			var res = new HttpPacket.TokenValidationRes();
 
 			Console.WriteLine($"Token Validation Request. Id : {req.UserId}, Token : {req.Token}");
 
@@ -58,9 +58,9 @@ namespace NextManComing_DBServer
 		// 유저의 토큰 값을 기록하는 메소드.
 		[Route("DB/RegistToken")]
 		[HttpPost]
-		public async Task<LoginServerPacket.RegistTokenRes> GetTokenAuth(LoginServerPacket.RegistTokenReq req)
+		public async Task<HttpPacket.RegistTokenRes> GetTokenAuth(HttpPacket.RegistTokenReq req)
 		{
-			var res = new LoginServerPacket.RegistTokenRes();
+			var res = new HttpPacket.RegistTokenRes();
 
 			Console.WriteLine($"Token Auth Request. Id : {req.UserId}, Token : {req.Token}");
 
@@ -82,9 +82,9 @@ namespace NextManComing_DBServer
 		// 유저의 토큰 값을 삭제하는 메소드.
 		[Route("DB/DeleteToken")]
 		[HttpPost]
-		public async Task<LoginServerPacket.DeleteTokenRes> DeleteToken(LoginServerPacket.DeleteTokenReq req)
+		public async Task<HttpPacket.DeleteTokenRes> DeleteToken(HttpPacket.DeleteTokenReq req)
 		{
-			var res = new LoginServerPacket.DeleteTokenRes();
+			var res = new HttpPacket.DeleteTokenRes();
 
 			Console.WriteLine($"Token Delete Request. Id : {req.UserId}, Token : {req.Token}");
 

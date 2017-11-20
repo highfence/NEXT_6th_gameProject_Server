@@ -11,6 +11,7 @@ namespace NetworkLibrary
     internal class HttpNetwork
     {
 		// Http Post를 보내주고 그 결과를 반환해주는 메소드.
+		// TODO :: 쓰레드 새로 만들어서 하기.
 		public async Task<T> HttpPostRequest<T>(string postUri, byte[] postData)
 		{
 			using (var httpClient = new HttpClient())

@@ -24,4 +24,5 @@ public enum ErrorCode
 	UnregistedId = 860,
 	InvalidToken = 861,
 
+	LoginRequestException = 900,
 }

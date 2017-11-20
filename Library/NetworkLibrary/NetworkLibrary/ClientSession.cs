@@ -15,6 +15,7 @@ namespace NetworkLibrary
 		BytePacker		    bytePacker;
 		IPacketLogicHandler packetLogicHandler;
 
+		// TODO :: 컨커런시 큐로 바꾸고 락 풀기.
 		Queue<Packet> sendQueue;
 
 		public ClientSession(IPacketLogicHandler packetLogicHandler)
@@ -32,12 +33,8 @@ namespace NetworkLibrary
 			SendEventArgs	 = sendEventArgs;
 		}
 
-		public void Send(Packet packet)
+		public void Send(Packet sendPacket)
 		{
-			// TODO :: sendPacket이 제대로 생성이 되는지 확인.
-			var sendPacket = new Packet();
-			sendPacket = packet;
-
 			lock (sendQueue)
 			{
 				// 큐가 비어있다면 큐에 추가하고 곧바로 비동기 전송 메서드 호출.
@@ -56,26 +53,34 @@ namespace NetworkLibrary
 
 		private void StartSend()
 		{
-			// TODO :: Send 짜야함.
 			lock (sendQueue)
 			{
-				//var sendPacket = sendQueue.Peek();
+				var sendPacket = sendQueue.Peek();
 
-				//// 헤더에 패킷 사이즈를 기록한다.
-				//sendPacket.RecordSize();
+				// 헤더에 패킷 사이즈를 기록한다.
+				var packetByte = MessagePackSerializer.Serialize(sendPacket);
 
-				//// 이번에 보낼 패킷 사이즈만큼 버퍼 크기를 설정하고.
-				//sendEventArgs.SetBuffer(sendEventArgs.Offset, sendPacket.Position);
+				var header = new PacketHeader()
+				{
+					BodySize = packetByte.Length,
+					PacketId = sendPacket.PacketId
+				};
 
-				//// 패킷 내용을 SocketAsyncEventArgs 버퍼에 복사한다.
-				//Array.Copy(sendPacket.Buffer, 0, sendEventArgs.Buffer, sendEventArgs.Offset, sendPacket.Position);
+				var headerByte = MessagePackSerializer.Serialize(header);
 
-				//// 비동기 전송 시작.
-				//bool pending = Socket.SendAsync(sendEventArgs);
-				//if (pending == false)
-				//{
-				//	ProcessSend(sendEventArgs);
-				//}
+				// 이번에 보낼 패킷 사이즈만큼 버퍼 크기를 설정하고.
+				var buffer = new byte[headerByte.Length + packetByte.Length];
+
+				// 패킷 내용을 SocketAsyncEventArgs 버퍼에 복사한다.
+				Array.Copy(headerByte, 0, buffer, 0, headerByte.Length);
+				Array.Copy(packetByte, 0, buffer, headerByte.Length, packetByte.Length);
+
+				// 비동기 전송 시작.
+				bool pending = Socket.SendAsync(SendEventArgs);
+				if (pending == false)
+				{
+					ProcessSend(SendEventArgs);
+				}
 			}
 		}
 

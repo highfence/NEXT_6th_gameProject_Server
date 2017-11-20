@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MessagePack;
 
-namespace NextManComing_DBServer
+namespace NetworkLibrary
 {
-	// 로그인 서버와 통신하기 위해 정의된 패킷 구조체들.
-	public static class LoginServerPacket
+	// 다른 서버와 통신하기 위해 정의된 패킷 구조체들.
+	public static class HttpPacket
 	{
 		public struct UserValidationReq
 		{
@@ -61,12 +62,5 @@ namespace NextManComing_DBServer
 		{
 			public int Result;
 		}
-
-	}
-
-	// 게임 서버와 통신하기 위해 정의된 패킷 구조체들.
-	internal static class GameServerPacket
-	{
-
 	}
 }
