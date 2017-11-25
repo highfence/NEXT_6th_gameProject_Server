@@ -5,4 +5,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MessagePack" Version="1.7.2" />
+    <PackageReference Include="MessagePackAnalyzer" Version="1.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\LogicLibrary\LogicLibrary.csproj" />
+    <ProjectReference Include="..\..\..\Library\NetworkLibrary\NetworkLibrary\NetworkLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

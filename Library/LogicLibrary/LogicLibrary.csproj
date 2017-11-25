@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MessagePack" Version="1.7.2" />
-    <PackageReference Include="MessagePackAnalyzer" Version="1.6.0" />
+    <ProjectReference Include="..\NetworkLibrary\NetworkLibrary\NetworkLibrary.csproj" />
   </ItemGroup>
 
 </Project>
