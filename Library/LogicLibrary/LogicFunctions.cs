@@ -21,7 +21,7 @@ namespace LogicLibrary
 
 			var reqDataByte = MessagePackSerializer.Serialize(tokenValidationReq);
 
-			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationRes>("http://127.0.0.1:20000/DB/UserValidation", reqDataByte);
+			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationRes>("http://localhost:20000/DB/UserValidation", reqDataByte);
 
 			if (tokenValidationRes.Result != (int)ErrorCode.None)
 			{

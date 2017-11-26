@@ -35,14 +35,16 @@ namespace NetworkLibrary
 			sendEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
 			MakeEventPools(maxConnections);
 
+			httpNetwork = new HttpNetwork();
+
 			this.userManager = userManager;
 			this.logicHandler = logicHandler;
 		}
 
 		// Http Post를 보내는 메소드.
-		public async Task<T> HttpPost<T>(string postUri, byte[] postData)
+		public async Task<RESULT_T> HttpPost<REQUEST_T, RESULT_T>(string postUri, byte[] postData)
 		{
-			return await httpNetwork.HttpPostRequest<T>(postUri, postData);
+			return await httpNetwork.HttpPostRequest<REQUEST_T, RESULT_T>(postUri, postData);
 		}
 
 		// 통신에 사용할 이벤트 풀을 생성하는 메소드.
