@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace LogicLibrary
 {
@@ -13,19 +14,21 @@ namespace LogicLibrary
 		{
 			var loginReq = MessagePackSerializer.Deserialize<LoginReq>(receivedPacket.Body);
 
+			logger.Debug($"Function Entry. Session({receivedPacket.Owner.Socket}) LoginReq UserId({loginReq.UserId}), Token({loginReq.Token})");
+
 			var tokenValidationReq = new HttpPacket.TokenValidationReq()
 			{
 				UserId = loginReq.UserId,
 				Token = loginReq.Token
 			};
 
-			var reqDataByte = MessagePackSerializer.Serialize(tokenValidationReq);
+			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationReq, HttpPacket.TokenValidationRes>("http://127.0.0.1:20000/DB/TokenValidation", tokenValidationReq);
 
-			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationRes>("http://localhost:20000/DB/UserValidation", reqDataByte);
+			logger.Debug($"DB Server Response to TokenValidation. Result({tokenValidationRes.Result}) Session({receivedPacket.Owner.Socket})");
 
 			if (tokenValidationRes.Result != (int)ErrorCode.None)
 			{
-				Console.WriteLine($"HttpPost TokenValidationReq failed. ErrorCode({tokenValidationRes.Result})");
+				logger.Debug($"HttpPost TokenValidationReq failed. ErrorCode({tokenValidationRes.Result})");
 			}
 
 			var loginRes = new LoginRes()

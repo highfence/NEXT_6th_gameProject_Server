@@ -2,11 +2,14 @@
 using NetworkLibrary;
 using System.Threading;
 using System.Collections.Generic;
+using NLog;
 
 namespace LogicLibrary
 {
     public partial class LogicProcessor : IPacketLogicHandler
     {
+		private static Logger logger = LogManager.GetCurrentClassLogger();
+
 		NetworkService		 networkService;
 		DoubleBufferingQueue messageQueue;
 		AutoResetEvent		 messageEvent;
@@ -31,6 +34,8 @@ namespace LogicLibrary
 		// 패킷을 받으면 메시지 이벤트를 활성화하여 로직 스레드가 돌아가도록 한다.
 		void IPacketLogicHandler.InsertPacket(Packet packet)
 		{
+			logger.Debug($"InsertPacket. Id({packet.PacketId}), Session({packet.Owner.Socket})");
+
 			messageQueue.Enqueue(packet);
 
 			messageEvent.Set();
@@ -55,6 +60,8 @@ namespace LogicLibrary
 		{
 			while (messageQueue.Count > 0)
 			{
+				logger.Debug($"LogicProcessor Dispatch Start. Queue Count : ({messageQueue.Count})");
+
 				var message = messageQueue.Dequeue();
 
 				if (userManager.IsUserExist(message.Owner))

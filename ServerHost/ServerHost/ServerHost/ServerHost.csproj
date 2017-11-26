@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="MessagePack" Version="1.7.2" />
     <PackageReference Include="MessagePackAnalyzer" Version="1.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0-rtm-rc2" />
   </ItemGroup>
 

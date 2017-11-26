@@ -42,7 +42,7 @@ namespace NetworkLibrary
 		}
 
 		// Http Post를 보내는 메소드.
-		public async Task<RESULT_T> HttpPost<REQUEST_T, RESULT_T>(string postUri, byte[] postData)
+		public async Task<RESULT_T> HttpPost<REQUEST_T, RESULT_T>(string postUri, REQUEST_T postData) where RESULT_T : new()
 		{
 			return await httpNetwork.HttpPostRequest<REQUEST_T, RESULT_T>(postUri, postData);
 		}
