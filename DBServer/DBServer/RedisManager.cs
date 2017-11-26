@@ -85,7 +85,12 @@ namespace NextManComing_DBServer
 				var redis = new RedisString<T>(redisGroupBasic, key);
 				var value = await redis.Get();
 
-				return value.Value == null ? Tuple.Create(false, default(T)) : Tuple.Create(true, value.Value);
+				if (value.HasValue)
+				{
+					return Tuple.Create(true, value.Value);
+				}
+
+				return Tuple.Create(false, default(T));
 			}
 			catch (Exception e)
 			{
@@ -113,16 +118,16 @@ namespace NextManComing_DBServer
 	public static class AuthTokenManager
 	{
 		// 레디스 서버에 토큰을 등록하는 메소드.
-		public static async Task RegistAuthToken(string userId, long token)
+		public static async Task RegistAuthToken(string userId, Int64 token)
 		{
-			await RedisManager.SetStringAsync<DbUserSession>(userId,
-				new DbUserSession() { AuthToken = token, ClientVersion = 1, ClientDataVersion = 1 });
+			await RedisManager.SetStringAsync<DBUserSession>(userId,
+				new DBUserSession() { AuthToken = token, ClientVersion = 1, ClientDataVersion = 1 });
 		}
 
 		// 레디스 서버에 등록되어 있는 토큰과 일치하는지를 확인하는 메소드.
-		public static async Task<ErrorCode> CheckAuthToken(string userId, long token)
+		public static async Task<ErrorCode> CheckAuthToken(string userId, Int64 token)
 		{
-			var sessionInfo = await RedisManager.GetStringAsync<DbUserSession>(userId);
+			var sessionInfo = await RedisManager.GetStringAsync<DBUserSession>(userId);
 
 			if (sessionInfo.Item1 == false)
 			{
@@ -131,7 +136,6 @@ namespace NextManComing_DBServer
 			else if (sessionInfo.Item2.AuthToken != token)
 			{
 				return ErrorCode.InvalidToken;
-
 			}
 			return ErrorCode.None;
 		}
@@ -139,13 +143,13 @@ namespace NextManComing_DBServer
 		// 레디스 서버에 아이디로 등록되어 있는 토큰을 지워주는 메소드.
 		public static async Task DeleteAuthToken(string userId)
 		{
-			await RedisManager.DeleteStringAsync<DbUserSession>(userId);
+			await RedisManager.DeleteStringAsync<DBUserSession>(userId);
 		}
 	}
 
-	public class DbUserSession
+	public class DBUserSession
 	{
-		public long AuthToken;
+		public Int64 AuthToken;
 		public short ClientVersion;
 		public short ClientDataVersion;
 	}
