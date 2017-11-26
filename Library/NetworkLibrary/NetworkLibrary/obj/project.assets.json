@@ -1280,7 +1280,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
+    "C:\\Users\\LittleHill\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -1289,17 +1289,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
+      "projectUniqueName": "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
       "projectName": "NetworkLibrary",
-      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
-      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
-      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\obj\\",
+      "projectPath": "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
+      "packagesPath": "C:\\Users\\LittleHill\\.nuget\\packages\\",
+      "outputPath": "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LittleHill\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
