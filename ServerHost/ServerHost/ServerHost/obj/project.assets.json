@@ -1838,11 +1838,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
-              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
+            "C:\\Dev\\NextManComming\\Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
+              "projectPath": "C:\\Dev\\NextManComming\\Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
             },
-            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
-              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
+            "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
+              "projectPath": "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
             }
           }
         }
