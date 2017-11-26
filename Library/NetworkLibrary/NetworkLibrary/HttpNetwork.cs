@@ -28,7 +28,7 @@ namespace NetworkLibrary
 
 				logger.Debug($"Req Json : {contentJson}");
 
-				var httpContent = new ByteArrayContent(Encoding.UTF8.GetBytes(contentJson));
+				var httpContent = new StringContent(contentJson);
 
 				HttpResponseMessage responseMessage = null;
 

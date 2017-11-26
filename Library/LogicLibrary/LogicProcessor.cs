@@ -34,7 +34,7 @@ namespace LogicLibrary
 		// 패킷을 받으면 메시지 이벤트를 활성화하여 로직 스레드가 돌아가도록 한다.
 		void IPacketLogicHandler.InsertPacket(Packet packet)
 		{
-			logger.Debug($"InsertPacket. Id({packet.PacketId}), Session({packet.Owner.Socket})");
+			logger.Debug($"InsertPacket. Id({packet.PacketId}), Session({packet.Owner.Socket.Handle})");
 
 			messageQueue.Enqueue(packet);
 

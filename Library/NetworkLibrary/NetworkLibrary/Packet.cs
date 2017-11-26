@@ -5,9 +5,10 @@ using MessagePack;
 
 namespace NetworkLibrary
 {
-    public class Packet
-    {
+	public class Packet
+	{
 		public ClientSession Owner { get; private set; }
+
 		public int PacketId { get; private set; }
 		public byte[] Body { get; private set; }
 
@@ -37,6 +38,7 @@ namespace NetworkLibrary
 		}
 	}
 
+
 	[MessagePackObject]
 	public class PacketHeader
 	{
@@ -44,6 +46,18 @@ namespace NetworkLibrary
 		public int PacketId;
 		[Key(1)]
 		public int BodySize;
+
+		public PacketHeader()
+		{
+			PacketId = 0;
+			BodySize = 0;
+		}
+
+		public PacketHeader(int bodySize, int packetId)
+		{
+			BodySize = bodySize;
+			PacketId = packetId;
+		}
 	}
 
 	[MessagePackObject]

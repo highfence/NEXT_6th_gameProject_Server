@@ -14,7 +14,7 @@ namespace LogicLibrary
 		{
 			var loginReq = MessagePackSerializer.Deserialize<LoginReq>(receivedPacket.Body);
 
-			logger.Debug($"Function Entry. Session({receivedPacket.Owner.Socket}) LoginReq UserId({loginReq.UserId}), Token({loginReq.Token})");
+			logger.Debug($"Function Entry. Session({receivedPacket.Owner.Socket.Handle}) LoginReq UserId({loginReq.UserId}), Token({loginReq.Token})");
 
 			var tokenValidationReq = new HttpPacket.TokenValidationReq()
 			{
@@ -22,9 +22,9 @@ namespace LogicLibrary
 				Token = loginReq.Token
 			};
 
-			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationReq, HttpPacket.TokenValidationRes>("http://127.0.0.1:20000/DB/TokenValidation", tokenValidationReq);
+			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationReq, HttpPacket.TokenValidationRes>("http://localhost:20000/DB/TokenValidation", tokenValidationReq);
 
-			logger.Debug($"DB Server Response to TokenValidation. Result({tokenValidationRes.Result}) Session({receivedPacket.Owner.Socket})");
+			logger.Debug($"DB Server Response to TokenValidation. Result({tokenValidationRes.Result}) Session({receivedPacket.Owner.Socket.Handle})");
 
 			if (tokenValidationRes.Result != (int)ErrorCode.None)
 			{
