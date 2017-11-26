@@ -1285,9 +1285,6 @@
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
       "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
       "projectName": "NetworkLibrary",
@@ -1323,10 +1320,6 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
-          "MessagePackAnalyzer": {
-            "target": "Package",
-            "version": "1.6.0"
-          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
@@ -1336,6 +1329,10 @@
           "MessagePack": {
             "target": "Package",
             "version": "1.7.2"
+          },
+          "MessagePackAnalyzer": {
+            "target": "Package",
+            "version": "1.6.0"
           }
         },
         "imports": [

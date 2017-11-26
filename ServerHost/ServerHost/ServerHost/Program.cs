@@ -2,12 +2,13 @@
 using NetworkLibrary;
 using LogicLibrary;
 using System.Collections.Generic;
-
+using NLog;
 namespace ServerHost
 {
     class Program
     {
-		static void Main(string[] args)
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        static void Main(string[] args)
 		{
 			var service		   = new NetworkService();
 			var userManager	   = new UserManager();
@@ -19,10 +20,22 @@ namespace ServerHost
 
 			Console.WriteLine($"Server Initialized. Port(23452)");
 
-			while (true)
+            logger.Trace("test Trace");
+
+            logger.Debug("test Debug");
+
+            logger.Info("test Info");
+
+            logger.Error("test Error");
+
+            logger.Fatal("test Fatal");
+
+            while (true)
 			{
 				System.Threading.Thread.Sleep(1000);
 			}
-		}
+
+
+        }
     }
 }
