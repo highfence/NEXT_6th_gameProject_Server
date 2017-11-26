@@ -4386,7 +4386,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
+    "C:\\Users\\LittleHill\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -4395,17 +4395,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "projectUniqueName": "C:\\Dev\\NextManComming\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
       "projectName": "ServerHost",
-      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
-      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
-      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
+      "projectPath": "C:\\Dev\\NextManComming\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "packagesPath": "C:\\Users\\LittleHill\\.nuget\\packages\\",
+      "outputPath": "C:\\Dev\\NextManComming\\Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LittleHill\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
