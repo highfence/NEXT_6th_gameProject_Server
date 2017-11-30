@@ -26,7 +26,7 @@ namespace LogicLibrary
 
 		public void StartLogic()
 		{
-			Thread logicThread = new Thread(LogicThread);
+			var logicThread = new Thread(LogicThread);
 			logicThread.Start();
 		}
 

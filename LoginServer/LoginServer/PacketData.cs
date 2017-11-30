@@ -16,14 +16,14 @@ namespace LoginServer
 		public struct LoginRes
 		{
 			public int Result;
-			public Int64 Token;
+			public long Token;
 		}
 
 		public struct LogoutReq
 		{
 			public string UserId;
 			public string UserPw;
-			public Int64 Token;
+			public long Token;
 		}
 	}
 
@@ -55,7 +55,7 @@ namespace LoginServer
 		public struct TokenValidationReq
 		{
 			public string UserId;
-			public Int64 Token;
+			public long Token;
 		}
 
 		public struct TokenValidationRes
@@ -66,7 +66,7 @@ namespace LoginServer
 		public struct RegistTokenReq
 		{
 			public string UserId;
-			public Int64 Token;
+			public long Token;
 		}
 
 		public struct RegistTokenRes
@@ -77,7 +77,7 @@ namespace LoginServer
 		public struct DeleteTokenReq
 		{
 			public string UserId;
-			public Int64 Token;
+			public long Token;
 		}
 
 		public struct DeleteTokenRes
