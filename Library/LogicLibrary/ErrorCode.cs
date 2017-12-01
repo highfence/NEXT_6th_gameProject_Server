@@ -8,7 +8,9 @@ public enum ErrorCode
 
 	UnIdentifiedError = 10,
 
-	// 800 ~ 900 번대는 임시로 DBServer, LoginServer 에러 코드로 쓰고 있겠음.
+	// 700 번대는 ManageServer 에러 코드.
+
+	// 800 번대는 DBServer, LoginServer 에러 코드.
 	MongoDBFindError = 800,
 	MongoDBInsertError = 801,
 
@@ -26,5 +28,6 @@ public enum ErrorCode
 	UnregistedId = 860,
 	InvalidToken = 861,
 
+	// 900 번대는 LoginServer 에러 코드.
 	LoginRequestException = 900,
 }
