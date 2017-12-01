@@ -121,7 +121,7 @@ namespace NetworkLibrary
 		{
 			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
 
-			var req = MessagePackSerializer.Deserialize<LoginReq>(buffer);
+			var req = MessagePackSerializer.Deserialize<ServerConnectReq>(buffer);
 
 			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
 

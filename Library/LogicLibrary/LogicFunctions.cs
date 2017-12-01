@@ -11,7 +11,7 @@ namespace LogicLibrary
     {
 		private async Task OnLoginReqArrived(Packet receivedPacket)
 		{
-			var loginReq = MessagePackSerializer.Deserialize<CommonLibrary.TcpPacket.LoginReq>(receivedPacket.Body);
+			var loginReq = MessagePackSerializer.Deserialize<ServerConnectReq>(receivedPacket.Body);
 
 			logger.Debug($"Function Entry. Session({receivedPacket.Owner.Socket.Handle}) LoginReq UserId({loginReq.UserId}), Token({loginReq.Token})");
 
@@ -30,7 +30,7 @@ namespace LogicLibrary
 				logger.Debug($"HttpPost TokenValidationReq failed. ErrorCode({tokenValidationRes.Result})");
 			}
 
-			var loginRes = new CommonLibrary.TcpPacket.LoginRes()
+			var loginRes = new ServerConnectRes()
 			{
 				Result = tokenValidationRes.Result
 			};

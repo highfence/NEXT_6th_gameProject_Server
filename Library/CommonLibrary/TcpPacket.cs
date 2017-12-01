@@ -25,7 +25,7 @@ namespace CommonLibrary.TcpPacket
 	}
 
 	[MessagePackObject]
-	public class LoginReq
+	public class ServerConnectReq
 	{
 		[Key(0)]
 		public string UserId;
@@ -34,7 +34,7 @@ namespace CommonLibrary.TcpPacket
 	}
 
 	[MessagePackObject]
-	public class LoginRes
+	public class ServerConnectRes
 	{
 		[Key(0)]
 		public int Result;
