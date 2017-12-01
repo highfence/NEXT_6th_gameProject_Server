@@ -1085,6 +1085,9 @@
       "CommonLibrary/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "MessagePack": "1.7.2"
+        },
         "compile": {
           "bin/placeholder/CommonLibrary.dll": {}
         },
@@ -1112,6 +1115,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "CommonLibrary": "1.0.0",
           "MessagePack": "1.7.2",
           "MessagePackAnalyzer": "1.6.0",
           "NLog.Extensions.Logging": "1.0.0-rtm-rc2",

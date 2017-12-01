@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetworkLibrary
+﻿namespace NetworkLibrary
 {
 	// IUserManager 인터페이스
 	public interface IUserManager

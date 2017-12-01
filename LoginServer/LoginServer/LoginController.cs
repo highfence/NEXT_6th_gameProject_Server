@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using CommonLibrary;
+using CommonLibrary.HttpPacket;
 
 namespace LoginServer
 {
@@ -9,9 +10,9 @@ namespace LoginServer
 	{
 		[Route("Login/Login")]
 		[HttpPost]
-		public async Task<ClientPacket.LoginRes> LoginRequest(ClientPacket.LoginReq reqPacket)
+		public async Task<LoginRes> LoginRequest(LoginReq reqPacket)
 		{
-			var resPacket = new ClientPacket.LoginRes();
+			var resPacket = new LoginRes();
 
 			// 유저 패스워드 암호화.
 			var encryptedPassword = Encrypter.EncryptString(reqPacket.UserPw);
@@ -21,7 +22,7 @@ namespace LoginServer
 			try
 			{
 				// DB에 유저가 가입되어 있는지를 조사한다.
-				var userValidationReq = new DBServerPacket.UserValidationReq()
+				var userValidationReq = new UserValidationReq()
 				{
 					UserId = reqPacket.UserId,
 					EncryptedPw = encryptedPassword
@@ -29,7 +30,7 @@ namespace LoginServer
 
 				var config = LoginServerConfig.GetInstance();
 
-				var userValidationRes = await HttpSender.RequestHttp<DBServerPacket.UserValidationReq, DBServerPacket.UserValidationRes>(
+				var userValidationRes = await HttpSender.RequestHttp<UserValidationReq, UserValidationRes>(
 						config.DBServerAddress, config.DBServerPort, "DB/UserValidation", userValidationReq);
 
 				// 가입되어 있지 않다면 에러 반환.
@@ -45,13 +46,13 @@ namespace LoginServer
 				resPacket.Token = TokenGenerator.GetInstance().CreateToken();
 
 				// DB Server에 토큰을 등록한다.
-				var registTokenReq = new DBServerPacket.RegistTokenReq()
+				var registTokenReq = new RegistTokenReq()
 				{
 					UserId = reqPacket.UserId,
 					Token = resPacket.Token
 				};
 
-				var registTokenRes = await HttpSender.RequestHttp<DBServerPacket.RegistTokenReq, DBServerPacket.RegistTokenRes>(
+				var registTokenRes = await HttpSender.RequestHttp<RegistTokenReq, RegistTokenRes>(
 						config.DBServerAddress, config.DBServerPort, "DB/RegistToken", registTokenReq);
 
 				// 토큰 등록이 실패했다면 에러 반환.

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using CommonLibrary;
+using CommonLibrary.HttpPacket;
 
 namespace DBServer
 {
@@ -10,9 +11,9 @@ namespace DBServer
 		// 해당 유저가 등록되어 있는지 확인하는 메소드.
 		[Route("DB/UserValidation")]
 		[HttpPost]
-		public async Task<HttpPacket.UserValidationRes> GetUserValidation(HttpPacket.UserValidationReq req)
+		public async Task<UserValidationRes> GetUserValidation(UserValidationReq req)
 		{
-			var res = new HttpPacket.UserValidationRes();
+			var res = new UserValidationRes();
 
 			Console.WriteLine($"UserValidation Request. Id : {req.UserId}, Pw : {req.EncryptedPw}");
 
@@ -26,9 +27,9 @@ namespace DBServer
 		// 유저를 등록하는 메소드.
 		[Route("DB/AddUser")]
 		[HttpPost]
-		public async Task<HttpPacket.UserJoinInRes> AddUser(HttpPacket.UserJoinInReq req)
+		public async Task<UserJoinInRes> AddUser(UserJoinInReq req)
 		{
-			var res = new HttpPacket.UserJoinInRes();
+			var res = new UserJoinInRes();
 
 			Console.WriteLine($"AddUser Request. Id : {req.UserId}, Pw : {req.EncryptedPw}");
 
@@ -42,9 +43,9 @@ namespace DBServer
 		// 유저의 토큰 값이 일치하는지 확인해주는 메소드.
 		[Route("DB/TokenValidation")]
 		[HttpPost]
-		public async Task<HttpPacket.TokenValidationRes> GetTokenValidation(HttpPacket.TokenValidationReq req)
+		public async Task<TokenValidationRes> GetTokenValidation(TokenValidationReq req)
 		{
-			var res = new HttpPacket.TokenValidationRes();
+			var res = new TokenValidationRes();
 
 			Console.WriteLine($"Token Validation Request. Id : {req.UserId}, Token : {req.Token}");
 
@@ -58,9 +59,9 @@ namespace DBServer
 		// 유저의 토큰 값을 기록하는 메소드.
 		[Route("DB/RegistToken")]
 		[HttpPost]
-		public async Task<HttpPacket.RegistTokenRes> GetTokenAuth(HttpPacket.RegistTokenReq req)
+		public async Task<RegistTokenRes> GetTokenAuth(RegistTokenReq req)
 		{
-			var res = new HttpPacket.RegistTokenRes();
+			var res = new RegistTokenRes();
 
 			Console.WriteLine($"Token Auth Request. Id : {req.UserId}, Token : {req.Token}");
 
@@ -82,9 +83,9 @@ namespace DBServer
 		// 유저의 토큰 값을 삭제하는 메소드.
 		[Route("DB/DeleteToken")]
 		[HttpPost]
-		public async Task<HttpPacket.DeleteTokenRes> DeleteToken(HttpPacket.DeleteTokenReq req)
+		public async Task<DeleteTokenRes> DeleteToken(DeleteTokenReq req)
 		{
-			var res = new HttpPacket.DeleteTokenRes();
+			var res = new DeleteTokenRes();
 
 			Console.WriteLine($"Token Delete Request. Id : {req.UserId}, Token : {req.Token}");
 

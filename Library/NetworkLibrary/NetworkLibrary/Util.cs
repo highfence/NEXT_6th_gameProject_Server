@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetworkLibrary
+﻿namespace NetworkLibrary
 {
-    internal static class Util
+	internal static class Util
     {
 
     }

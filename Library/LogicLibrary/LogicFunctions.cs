@@ -2,6 +2,8 @@
 using MessagePack;
 using System.Threading.Tasks;
 using CommonLibrary;
+using CommonLibrary.HttpPacket;
+using CommonLibrary.TcpPacket;
 
 namespace LogicLibrary
 {
@@ -9,17 +11,17 @@ namespace LogicLibrary
     {
 		private async Task OnLoginReqArrived(Packet receivedPacket)
 		{
-			var loginReq = MessagePackSerializer.Deserialize<LoginReq>(receivedPacket.Body);
+			var loginReq = MessagePackSerializer.Deserialize<CommonLibrary.TcpPacket.LoginReq>(receivedPacket.Body);
 
 			logger.Debug($"Function Entry. Session({receivedPacket.Owner.Socket.Handle}) LoginReq UserId({loginReq.UserId}), Token({loginReq.Token})");
 
-			var tokenValidationReq = new HttpPacket.TokenValidationReq()
+			var tokenValidationReq = new TokenValidationReq()
 			{
 				UserId = loginReq.UserId,
 				Token = loginReq.Token
 			};
 
-			var tokenValidationRes = await networkService.HttpPost<HttpPacket.TokenValidationReq, HttpPacket.TokenValidationRes>("http://localhost:20000/DB/TokenValidation", tokenValidationReq);
+			var tokenValidationRes = await networkService.HttpPost<TokenValidationReq, TokenValidationRes>("http://localhost:20000/DB/TokenValidation", tokenValidationReq);
 
 			logger.Debug($"DB Server Response to TokenValidation. Result({tokenValidationRes.Result}) Session({receivedPacket.Owner.Socket.Handle})");
 
@@ -28,7 +30,7 @@ namespace LogicLibrary
 				logger.Debug($"HttpPost TokenValidationReq failed. ErrorCode({tokenValidationRes.Result})");
 			}
 
-			var loginRes = new LoginRes()
+			var loginRes = new CommonLibrary.TcpPacket.LoginRes()
 			{
 				Result = tokenValidationRes.Result
 			};

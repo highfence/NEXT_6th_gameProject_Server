@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Collections.Generic;
 using NLog;
+using CommonLibrary.TcpPacket;
 
 namespace LogicLibrary
 {

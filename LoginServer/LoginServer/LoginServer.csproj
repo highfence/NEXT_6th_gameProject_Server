@@ -70,11 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encrypter.cs" />
-    <Compile Include="ErrorCode.cs" />
     <Compile Include="HttpSender.cs" />
     <Compile Include="LoginController.cs" />
     <Compile Include="LoginServerConfig.cs" />
-    <Compile Include="PacketData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -84,6 +82,12 @@
     <None Include="App.config" />
     <None Include="IdGenHelp.chm" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library\CommonLibrary\CommonLibrary.csproj">
+      <Project>{64086658-8a99-4dcc-a083-b00e6fbb46d4}</Project>
+      <Name>CommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

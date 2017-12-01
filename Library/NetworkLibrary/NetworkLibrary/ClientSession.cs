@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using MessagePack;
 using NLog;
+using CommonLibrary.TcpPacket;
 
 namespace NetworkLibrary
 {

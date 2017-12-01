@@ -920,6 +920,19 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
+      },
+      "CommonLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "MessagePack": "1.7.2"
+        },
+        "compile": {
+          "bin/placeholder/CommonLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CommonLibrary.dll": {}
+        }
       }
     }
   },
@@ -3879,10 +3892,16 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "CommonLibrary/1.0.0": {
+      "type": "project",
+      "path": "../../CommonLibrary/CommonLibrary.csproj",
+      "msbuildProject": "../../CommonLibrary/CommonLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "CommonLibrary >= 1.0.0",
       "MessagePack >= 1.7.2",
       "MessagePackAnalyzer >= 1.6.0",
       "NETStandard.Library >= 2.0.0",
@@ -3922,7 +3941,11 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\CommonLibrary\\CommonLibrary.csproj": {
+              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\CommonLibrary\\CommonLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

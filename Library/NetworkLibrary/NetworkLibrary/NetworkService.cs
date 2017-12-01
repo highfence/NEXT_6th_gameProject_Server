@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NetworkLibrary
 {
-    public class NetworkService
+	public class NetworkService
     {
 		ClientListener clientListener;
 

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using NLog;
-using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace NetworkLibrary
 {
-    internal class HttpNetwork
+	internal class HttpNetwork
     {
 		private static Logger logger = LogManager.GetCurrentClassLogger();
 
