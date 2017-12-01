@@ -1,5 +1,4 @@
-﻿using System;
-using NetworkLibrary;
+﻿using NetworkLibrary;
 using System.Threading;
 using System.Collections.Generic;
 using NLog;

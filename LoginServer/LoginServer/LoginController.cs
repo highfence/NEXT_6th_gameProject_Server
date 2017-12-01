@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using CommonLibrary;
 
-namespace LoginServer 
+namespace LoginServer
 {
 	public class LoginController : ApiController
 	{

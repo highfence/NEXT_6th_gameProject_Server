@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	// 다른 서버와 통신하기 위해 정의된 패킷 구조체들.
 	public static class HttpPacket

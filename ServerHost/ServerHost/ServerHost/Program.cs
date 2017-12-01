@@ -1,12 +1,11 @@
-﻿using System;
+﻿using LogicLibrary;
 using NetworkLibrary;
-using LogicLibrary;
-using System.Collections.Generic;
 using NLog;
+using System;
 
 namespace ServerHost
 {
-    class Program
+	class Program
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 

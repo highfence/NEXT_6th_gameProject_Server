@@ -3,7 +3,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	class Program
 	{

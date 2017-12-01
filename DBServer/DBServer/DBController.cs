@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Text;
+using CommonLibrary;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	public class DBController : ApiController
 	{

@@ -1,10 +1,7 @@
 ﻿using Owin;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Web.Http;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	class Startup
 	{
