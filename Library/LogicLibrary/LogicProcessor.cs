@@ -6,16 +6,16 @@ using CommonLibrary.TcpPacket;
 
 namespace LogicLibrary
 {
-    public partial class LogicProcessor : IPacketLogicHandler
+    public partial class LogicProcessor : IPacketHandleable
     {
 		private static Logger logger = LogManager.GetCurrentClassLogger();
 
 		NetworkService		 networkService;
 		DoubleBufferingQueue messageQueue;
 		AutoResetEvent		 messageEvent;
-		IUserManager		 userManager;
+		ISessionManageable		 userManager;
 
-		public LogicProcessor(NetworkService service, IUserManager userManager)
+		public LogicProcessor(NetworkService service, ISessionManageable userManager)
 		{
 			networkService   = service;
 			this.userManager = userManager;
@@ -32,7 +32,7 @@ namespace LogicLibrary
 
 		// 네트워크 단에서 만들어진 패킷을 받아오는 메소드.
 		// 패킷을 받으면 메시지 이벤트를 활성화하여 로직 스레드가 돌아가도록 한다.
-		void IPacketLogicHandler.InsertPacket(Packet packet)
+		void IPacketHandleable.InsertPacket(Packet packet)
 		{
 			logger.Debug($"InsertPacket. Id({packet.PacketId}), Session({packet.Owner.Socket.Handle})");
 

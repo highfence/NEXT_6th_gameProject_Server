@@ -7,7 +7,7 @@ using CommonLibrary.TcpPacket;
 
 namespace NetworkLibrary
 {
-	public class ClientSession
+	public class ClientSession : ISession
     {
 		static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -17,11 +17,11 @@ namespace NetworkLibrary
 		public SocketAsyncEventArgs SendEventArgs	 { get; private set; }
 
 		BytePacker		    bytePacker;
-		IPacketLogicHandler packetLogicHandler;
+		IPacketHandleable packetLogicHandler;
 
 		Queue<Packet> sendQueue;
 
-		public ClientSession(IPacketLogicHandler packetLogicHandler)
+		public ClientSession(IPacketHandleable packetLogicHandler)
 		{
 			sendQueue  = new Queue<Packet>();
 			bytePacker = new BytePacker();

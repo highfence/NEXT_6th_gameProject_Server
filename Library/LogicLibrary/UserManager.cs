@@ -2,9 +2,9 @@
 
 namespace LogicLibrary
 {
-	public class UserManager : IUserManager
+	public class UserManager : ISessionManageable
     {
-		bool IUserManager.IsUserExist(ClientSession owner)
+		bool ISessionManageable.IsUserExist(ISession owner)
 		{
 			return true;
 		}

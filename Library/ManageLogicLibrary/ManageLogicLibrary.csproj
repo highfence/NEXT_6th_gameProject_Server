@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj" />
+    <ProjectReference Include="..\NetworkLibrary\NetworkLibrary\NetworkLibrary.csproj" />
   </ItemGroup>
 
 </Project>
