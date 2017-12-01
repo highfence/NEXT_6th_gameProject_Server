@@ -23,6 +23,7 @@ namespace ServerHost
 
             while (true)
 			{
+				// TODO :: 여기에 현재 몇명이 접속했는지 등의 정보를 Console.Title로 기록.
 				System.Threading.Thread.Sleep(1000);
 			}
         }

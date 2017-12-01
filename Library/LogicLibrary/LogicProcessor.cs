@@ -64,7 +64,7 @@ namespace LogicLibrary
 
 				var message = messageQueue.Dequeue();
 
-				if (userManager.IsUserExist(message.Owner))
+				if (userManager.IsSessionValid(message.Owner))
 				{
 					InvokePacketEvents(message);
 				}

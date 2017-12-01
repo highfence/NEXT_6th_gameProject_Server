@@ -4,6 +4,8 @@
 	public interface ISessionManageable
 	{
 		// 해당 세션이 유효한지 확인해주는 메서드.
-		bool IsUserExist(Session session);
+		bool IsSessionValid(Session session);
+
+		int GetSessionTotalCount();
 	}
 }
