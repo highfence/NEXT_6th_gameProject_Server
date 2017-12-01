@@ -7,7 +7,7 @@ namespace NetworkLibrary
 {
 	public class Packet
 	{
-		public ClientSession Owner { get; private set; }
+		public Session Owner { get; private set; }
 
 		public int PacketId { get; private set; }
 		public byte[] Body { get; private set; }
@@ -19,7 +19,7 @@ namespace NetworkLibrary
 			Body = null;
 		}
 
-		public Packet(ClientSession owner, int packetId, ArraySegment<byte> buffer)
+		public Packet(Session owner, int packetId, ArraySegment<byte> buffer)
 		{
 			Owner = owner;
 			PacketId = packetId;
@@ -28,7 +28,7 @@ namespace NetworkLibrary
 			Array.Copy(buffer.Array, Body, buffer.Array.Length);
 		}
 
-		public Packet(ClientSession owner, int packetId, byte[] serializedPacketBody)
+		public Packet(Session owner, int packetId, byte[] serializedPacketBody)
 		{
 			Owner = owner;
 			PacketId = packetId;

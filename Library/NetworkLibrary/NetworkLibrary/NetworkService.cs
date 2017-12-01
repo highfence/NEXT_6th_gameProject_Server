@@ -16,7 +16,7 @@ namespace NetworkLibrary
 		ISessionManageable	userManager;
 		IPacketHandleable   logicHandler;
 
-		public delegate void SessionHandler(ClientSession session);
+		public delegate void SessionHandler(Session session);
 		public SessionHandler OnSessionCreated { get; set; }
 
 		public void Initialize(IPacketHandleable logicHandler, ISessionManageable userManager)
@@ -109,14 +109,14 @@ namespace NetworkLibrary
 			var receiveArgs = receiveEventArgsPool.Pop();
 			var sendArgs	= sendEventArgsPool.Pop();
 
-			var session = new ClientSession(logicHandler);
+			var session = new Session(logicHandler);
 			receiveArgs.UserToken = session;
 			sendArgs.UserToken	  = session;
 
 			session.SetEventArgs(receiveArgs, sendArgs);
 			session.Socket = clientSocket;
 
-			OnSessionCreated?.Invoke(receiveArgs.UserToken as ClientSession);
+			OnSessionCreated?.Invoke(receiveArgs.UserToken as Session);
 
 			// 클라이언트로부터 데이터를 수신할 준비를 한다.
 			BeginReceive(clientSocket, receiveArgs, sendArgs);
@@ -141,7 +141,7 @@ namespace NetworkLibrary
 
 		private void ProcessReceive(SocketAsyncEventArgs e)
 		{
-			ClientSession session = e.UserToken as ClientSession;
+			Session session = e.UserToken as Session;
 			if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
 			{
 				// 이 이후의 작업은 각 세션에서 진행한다.

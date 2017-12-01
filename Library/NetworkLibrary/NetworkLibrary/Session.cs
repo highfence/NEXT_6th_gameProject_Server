@@ -7,7 +7,8 @@ using CommonLibrary.TcpPacket;
 
 namespace NetworkLibrary
 {
-	public class ClientSession : ISession
+	// 네트워크로 접속한 세션을 의미하는 객체.
+	public class Session
     {
 		static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -16,12 +17,12 @@ namespace NetworkLibrary
 		public SocketAsyncEventArgs ReceiveEventArgs { get; private set; }
 		public SocketAsyncEventArgs SendEventArgs	 { get; private set; }
 
-		BytePacker		    bytePacker;
+		BytePacker		  bytePacker;
 		IPacketHandleable packetLogicHandler;
 
 		Queue<Packet> sendQueue;
 
-		public ClientSession(IPacketHandleable packetLogicHandler)
+		public Session(IPacketHandleable packetLogicHandler)
 		{
 			sendQueue  = new Queue<Packet>();
 			bytePacker = new BytePacker();

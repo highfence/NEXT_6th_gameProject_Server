@@ -4,7 +4,7 @@ namespace ManageLogicLibrary
 {
 	public class ConnectServerManager : ISessionManageable
 	{
-		public bool IsUserExist(ISession owner)
+		public bool IsUserExist(Session serverSession)
 		{
 			throw new System.NotImplementedException();
 		}

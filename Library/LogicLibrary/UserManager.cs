@@ -4,7 +4,7 @@ namespace LogicLibrary
 {
 	public class UserManager : ISessionManageable
     {
-		bool ISessionManageable.IsUserExist(ISession owner)
+		bool ISessionManageable.IsUserExist(Session clientSession)
 		{
 			return true;
 		}
