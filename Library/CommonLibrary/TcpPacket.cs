@@ -1,5 +1,6 @@
 ﻿using MessagePack;
 using System;
+using System.Collections.Generic;
 
 namespace CommonLibrary.TcpPacket
 {
@@ -24,6 +25,28 @@ namespace CommonLibrary.TcpPacket
 		}
 	}
 
+	#region MANAGE SERVER PACKETS
+
+	[MessagePackObject]
+	public class ServerListReq
+	{
+		public string Id;
+		public Int64 Token;
+	}
+
+	[MessagePackObject]
+	public class ServerListRes
+	{
+		public int Result;
+		public int ServerCount;
+		public List<string> ServerList;
+		public List<int> ServerCountList;
+	}
+
+	#endregion
+
+	#region GAME SERVER PACKETS
+
 	[MessagePackObject]
 	public class ServerConnectReq
 	{
@@ -42,7 +65,16 @@ namespace CommonLibrary.TcpPacket
 
 	public enum PacketId
 	{
-		LoginReq = 101,
-		LoginRes = 102
+		// Manage Server 관련 패킷은 100번대 사용.
+
+		ServerListReq = 110,
+		ServerListRes = 111,
+
+		// 게임 서버 관련 패킷은 200번대 사용.
+
+		ServerConnectReq = 201,
+		ServerConnectRes = 202,
 	}
+
+	#endregion
 }

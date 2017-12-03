@@ -35,7 +35,9 @@ namespace LogicLibrary
 				Result = tokenValidationRes.Result
 			};
 
-			var sendPacket = new Packet(receivedPacket.Owner, (int)PacketId.LoginRes, MessagePackSerializer.Serialize(loginRes));
+			var byteMessage = MessagePackSerializer.Serialize(loginRes);
+
+			var sendPacket = new Packet(receivedPacket.Owner, (int)PacketId.ServerConnectRes, byteMessage);
 
 			var postSession = receivedPacket.Owner;
 

@@ -76,7 +76,7 @@ namespace LogicLibrary
 		{
 			switch ((PacketId)receivedPacket.PacketId)
 			{
-				case PacketId.LoginReq :
+				case PacketId.ServerConnectReq :
 					OnLoginReqArrived(receivedPacket);
 					break;
 			}

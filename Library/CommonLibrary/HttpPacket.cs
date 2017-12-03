@@ -17,6 +17,8 @@ namespace CommonLibrary.HttpPacket
 	{
 		public int Result;
 		public long Token;
+		public string ManageServerAddr;
+		public int ManageServerPort;
 	}
 
 	// 클라이언트의 로그 아웃 요청 패킷.

@@ -67,6 +67,13 @@ namespace LoginServer
 				// 모든 절차가 완료되었다면 정상값 반환.
 				Console.WriteLine($"Login request completed : Id({reqPacket.UserId}), Pw({encryptedPassword})");
 				resPacket.Result = (int)ErrorCode.None;
+
+#if DEBUG
+				// TODO :: 이부분 고쳐야 함.
+				resPacket.ManageServerAddr = "localhost";
+				resPacket.ManageServerPort = 19000;
+#endif
+
 				return resPacket;
 			}
 			catch (Exception e)

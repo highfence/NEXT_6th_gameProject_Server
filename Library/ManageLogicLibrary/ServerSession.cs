@@ -10,6 +10,8 @@ namespace ManageLogicLibrary
 
 		public string Address { get; private set; }
 
+		public int Count { get; private set; }
+
 
 		public ServerSession(Session baseSession)
 		{
