@@ -28,24 +28,47 @@ namespace CommonLibrary.TcpPacket
 	#region MANAGE SERVER PACKETS
 
 	[MessagePackObject]
+	public class ServerRegistRes
+	{
+		[Key(0)]
+		public string Address;
+		[Key(1)]
+		public int Port;
+	}
+
+	[MessagePackObject]
+	public class ServerRegistReq
+	{
+		[Key(0)]
+		public int Result;
+	}
+
+	[MessagePackObject]
 	public class ServerListReq
 	{
+		[Key(0)]
 		public string Id;
+		[Key(1)]
 		public Int64 Token;
 	}
 
 	[MessagePackObject]
 	public class ServerListRes
 	{
+		[Key(0)]
 		public int Result;
+		[Key(1)]
 		public int ServerCount;
+		[Key(2)]
 		public List<string> ServerList;
+		[Key(3)]
 		public List<int> ServerCountList;
 	}
 
 	#endregion
 
 	#region GAME SERVER PACKETS
+
 
 	[MessagePackObject]
 	public class ServerConnectReq
@@ -66,6 +89,9 @@ namespace CommonLibrary.TcpPacket
 	public enum PacketId
 	{
 		// Manage Server 관련 패킷은 100번대 사용.
+
+		ServerRegistRes = 100,
+		ServerRegistReq = 101,
 
 		ServerListReq = 110,
 		ServerListRes = 111,
