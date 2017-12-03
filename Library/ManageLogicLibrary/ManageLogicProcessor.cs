@@ -24,6 +24,10 @@ namespace ManageLogicLibrary
 
 			messageQueue = new DoubleBufferingQueue();
 			messageEvent = new AutoResetEvent(false);
+
+			var connectedServerManager = (ConnectServerManager)this.serverManager;
+
+			networkService.OnSessionCreated += connectedServerManager.Add;
 		}
 
 
@@ -78,7 +82,12 @@ namespace ManageLogicLibrary
 				case PacketId.ServerListReq:
 					OnServerListReqArrived(message);
 					break;
+
+				case PacketId.ServerRegistReq:
+					OnServerRegistReqArrived(message);
+					break;
 			}
 		}
+
 	}
 }

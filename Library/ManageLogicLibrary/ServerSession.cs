@@ -8,7 +8,7 @@ namespace ManageLogicLibrary
 	{
 		public Session Session { get; private set; }
 
-		public string Address { get; private set; }
+		public string AddrEndPoint { get; private set; }
 
 		public int Count { get; private set; }
 
@@ -23,6 +23,12 @@ namespace ManageLogicLibrary
 		public bool Equals(Session compareSession)
 		{
 			return Session == compareSession;
+		}
+
+
+		public void SetServerInfo(string address, int port)
+		{
+			AddrEndPoint = address + ":" + port.ToString();
 		}
 	}
 }

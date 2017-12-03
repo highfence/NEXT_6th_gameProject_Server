@@ -22,7 +22,7 @@ namespace ManageLogicLibrary
 
 			foreach (var session in connectedServers)
 			{
-				res.ServerList.Add(session.Address);
+				res.ServerList.Add(session.AddrEndPoint);
 				res.ServerCountList.Add(session.Count);
 			}
 		}
@@ -58,12 +58,20 @@ namespace ManageLogicLibrary
 		}
 
 
-
 		bool ISessionManageable.IsSessionValid(Session findSession)
 		{
 			lock (connectedServers)
 			{
 				return connectedServers.Exists(connectedServer => connectedServer.Equals(findSession));
+			}
+		}
+
+
+		internal ServerSession GetOwner(Session findSession)
+		{
+			lock(connectedServers)
+			{
+				return connectedServers.Find(connectedServer => connectedServer.Equals(findSession));
 			}
 		}
 	}

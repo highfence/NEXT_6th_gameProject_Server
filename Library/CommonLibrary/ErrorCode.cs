@@ -10,6 +10,7 @@ namespace CommonLibrary
 		UnIdentifiedError = 10,
 
 		// 700 번대는 ManageServer 에러 코드.
+		ServerRegistFail = 710,
 
 		// 800 번대는 DBServer, LoginServer 에러 코드.
 		MongoDBFindError = 800,

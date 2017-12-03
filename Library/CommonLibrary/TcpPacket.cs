@@ -28,7 +28,7 @@ namespace CommonLibrary.TcpPacket
 	#region MANAGE SERVER PACKETS
 
 	[MessagePackObject]
-	public class ServerRegistRes
+	public class ServerRegistReq
 	{
 		[Key(0)]
 		public string Address;
@@ -37,7 +37,7 @@ namespace CommonLibrary.TcpPacket
 	}
 
 	[MessagePackObject]
-	public class ServerRegistReq
+	public class ServerRegistRes
 	{
 		[Key(0)]
 		public int Result;
