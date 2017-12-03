@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CloudStructures;
+using CommonLibrary;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	public static class RedisManager
 	{

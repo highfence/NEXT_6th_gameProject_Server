@@ -1082,10 +1082,24 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
+      "CommonLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "MessagePack": "1.7.2"
+        },
+        "compile": {
+          "bin/placeholder/CommonLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CommonLibrary.dll": {}
+        }
+      },
       "LogicLibrary/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "CommonLibrary": "1.0.0",
           "NLog.Extensions.Logging": "1.0.0-rtm-rc2",
           "NetworkLibrary": "1.0.0",
           "Newtonsoft.Json": "10.0.3"
@@ -1101,6 +1115,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "CommonLibrary": "1.0.0",
           "MessagePack": "1.7.2",
           "MessagePackAnalyzer": "1.6.0",
           "NLog.Extensions.Logging": "1.0.0-rtm-rc2",
@@ -4362,6 +4377,11 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "CommonLibrary/1.0.0": {
+      "type": "project",
+      "path": "../../../Library/CommonLibrary/CommonLibrary.csproj",
+      "msbuildProject": "../../../Library/CommonLibrary/CommonLibrary.csproj"
     },
     "LogicLibrary/1.0.0": {
       "type": "project",

@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	internal class DBServerConfig
 	{

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using LogicLibrary;
 using NetworkLibrary;
-using LogicLibrary;
-using System.Collections.Generic;
 using NLog;
+using System;
 
 namespace ServerHost
 {
-    class Program
+	class Program
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -24,6 +23,7 @@ namespace ServerHost
 
             while (true)
 			{
+				// TODO :: 여기에 현재 몇명이 접속했는지 등의 정보를 Console.Title로 기록.
 				System.Threading.Thread.Sleep(1000);
 			}
         }

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 
 namespace NetworkLibrary
 {
 	// 네트워크 라이브러리 내부에서 새로운 클라이언트의 접속을 감지하는 클래스.
-    internal class ClientListener
+	internal class ClientListener
     {
 		SocketAsyncEventArgs acceptArgs;
 

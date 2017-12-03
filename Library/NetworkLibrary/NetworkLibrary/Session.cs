@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using MessagePack;
 using NLog;
+using CommonLibrary.TcpPacket;
 
 namespace NetworkLibrary
 {
-	public class ClientSession
+	// 네트워크로 접속한 세션을 의미하는 객체.
+	public class Session
     {
 		static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -15,12 +17,12 @@ namespace NetworkLibrary
 		public SocketAsyncEventArgs ReceiveEventArgs { get; private set; }
 		public SocketAsyncEventArgs SendEventArgs	 { get; private set; }
 
-		BytePacker		    bytePacker;
-		IPacketLogicHandler packetLogicHandler;
+		BytePacker		  bytePacker;
+		IPacketHandleable packetLogicHandler;
 
 		Queue<Packet> sendQueue;
 
-		public ClientSession(IPacketLogicHandler packetLogicHandler)
+		public Session(IPacketHandleable packetLogicHandler)
 		{
 			sendQueue  = new Queue<Packet>();
 			bytePacker = new BytePacker();
@@ -120,7 +122,7 @@ namespace NetworkLibrary
 		{
 			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
 
-			var req = MessagePackSerializer.Deserialize<LoginReq>(buffer);
+			var req = MessagePackSerializer.Deserialize<ServerConnectReq>(buffer);
 
 			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
 

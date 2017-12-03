@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NetworkLibrary;
+﻿using NetworkLibrary;
 
 namespace LogicLibrary
 {
-    public class UserManager : IUserManager
+	public class UserManager : ISessionManageable
     {
-		bool IUserManager.IsUserExist(ClientSession owner)
+		bool ISessionManageable.IsSessionValid(Session clientSession)
 		{
 			return true;
+		}
+
+		int ISessionManageable.GetSessionTotalCount()
+		{
+			return 0;
 		}
     }
 }

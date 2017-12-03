@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 
 namespace NetworkLibrary
 {
@@ -9,7 +8,7 @@ namespace NetworkLibrary
 	// 의 클래스를 그대로 사용.
 	internal class SocketAsyncEventArgsPool
     {
-		Stack<SocketAsyncEventArgs> m_pool;
+		Stack<SocketAsyncEventArgs> pool;
 
 		// Initializes the object pool to the specified size
 		//
@@ -17,7 +16,7 @@ namespace NetworkLibrary
 		// SocketAsyncEventArgs objects the pool can hold
 		public SocketAsyncEventArgsPool(int capacity)
 		{
-			m_pool = new Stack<SocketAsyncEventArgs>(capacity);
+			pool = new Stack<SocketAsyncEventArgs>(capacity);
 		}
 
 		// Add a SocketAsyncEventArg instance to the pool
@@ -27,9 +26,9 @@ namespace NetworkLibrary
 		public void Push(SocketAsyncEventArgs item)
 		{
 			if (item == null) { throw new ArgumentNullException("Items added to a SocketAsyncEventArgsPool cannot be null"); }
-			lock (m_pool)
+			lock (pool)
 			{
-				m_pool.Push(item);
+				pool.Push(item);
 			}
 		}
 
@@ -37,16 +36,16 @@ namespace NetworkLibrary
 		// and returns the object removed from the pool
 		public SocketAsyncEventArgs Pop()
 		{
-			lock (m_pool)
+			lock (pool)
 			{
-				return m_pool.Pop();
+				return pool.Pop();
 			}
 		}
 
 		// The number of SocketAsyncEventArgs instances in the pool
 		public int Count
 		{
-			get { return m_pool.Count; }
+			get { return pool.Count; }
 		}
 
 

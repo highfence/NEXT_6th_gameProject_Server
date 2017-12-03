@@ -7,7 +7,7 @@ namespace NetworkLibrary
 {
 	public class Packet
 	{
-		public ClientSession Owner { get; private set; }
+		public Session Owner { get; private set; }
 
 		public int PacketId { get; private set; }
 		public byte[] Body { get; private set; }
@@ -19,7 +19,7 @@ namespace NetworkLibrary
 			Body = null;
 		}
 
-		public Packet(ClientSession owner, int packetId, ArraySegment<byte> buffer)
+		public Packet(Session owner, int packetId, ArraySegment<byte> buffer)
 		{
 			Owner = owner;
 			PacketId = packetId;
@@ -28,7 +28,7 @@ namespace NetworkLibrary
 			Array.Copy(buffer.Array, Body, buffer.Array.Length);
 		}
 
-		public Packet(ClientSession owner, int packetId, byte[] serializedPacketBody)
+		public Packet(Session owner, int packetId, byte[] serializedPacketBody)
 		{
 			Owner = owner;
 			PacketId = packetId;
@@ -36,49 +36,5 @@ namespace NetworkLibrary
 
 			Array.Copy(serializedPacketBody, Body, serializedPacketBody.Length);
 		}
-	}
-
-
-	[MessagePackObject]
-	public class PacketHeader
-	{
-		[Key(0)]
-		public int PacketId;
-		[Key(1)]
-		public int BodySize;
-
-		public PacketHeader()
-		{
-			PacketId = 0;
-			BodySize = 0;
-		}
-
-		public PacketHeader(int bodySize, int packetId)
-		{
-			BodySize = bodySize;
-			PacketId = packetId;
-		}
-	}
-
-	[MessagePackObject]
-	public class LoginReq
-	{
-		[Key(0)]
-		public string UserId;
-		[Key(1)]
-		public Int64 Token;
-	}
-
-	[MessagePackObject]
-	public class LoginRes
-	{
-		[Key(0)]
-		public int Result;
-	}
-
-	public enum PacketId
-	{
-		LoginReq = 101,
-		LoginRes = 102
 	}
 }
