@@ -8,7 +8,7 @@ namespace ManageLogicLibrary
 	// 현재 접속중인 서버를 관리하는 클래스.
 	public class ConnectServerManager : ISessionManageable
 	{
-		List<ServerSession> connectedServers;
+		List<ServerSession> connectedServers = new List<ServerSession>();
 
 
 		// ServerListRes 패킷에 대해서 필요한 정보들을 작성해주는 메서드.
@@ -27,11 +27,6 @@ namespace ManageLogicLibrary
 			}
 		}
 
-
-		public ConnectServerManager()
-		{
-			connectedServers = new List<ServerSession>();
-		}
 
 
 		public void Add(ServerSession session)

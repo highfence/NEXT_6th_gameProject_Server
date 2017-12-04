@@ -19,33 +19,46 @@ namespace NetworkLibrary
 		public delegate void SessionHandler(Session session);
 		public SessionHandler OnSessionCreated { get; set; }
 
+
 		public void Initialize(IPacketHandleable logicHandler, ISessionManageable userManager)
 		{
 			// TODO :: 서버 config 클래스 구현.
 			const int maxConnections = 10000;
-			const int bufferSize = 1024;
-			const int preAllocCount = 2;
+			const int bufferSize     = 1024;
+			const int preAllocCount  = 2;
 
 			bufferManager = new BufferManager(maxConnections * bufferSize * preAllocCount, bufferSize);
 			bufferManager.InitBuffer();
 
 			receiveEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
-			sendEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
+			sendEventArgsPool    = new SocketAsyncEventArgsPool(maxConnections);
 			MakeEventPools(maxConnections);
 
 			httpNetwork = new HttpNetwork();
 
-			this.userManager = userManager;
+			this.userManager  = userManager;
 			this.logicHandler = logicHandler;
 		}
 
-		// Http Post를 보내는 메소드.
+
+		/// <summary>
+		/// Http Post를 보내는 래핑 메소드.
+		/// </summary>
+		/// <typeparam name="REQUEST_T"></typeparam>
+		/// <typeparam name="RESULT_T"></typeparam>
+		/// <param name="postUri"></param>
+		/// <param name="postData"></param>
+		/// <returns></returns>
 		public async Task<RESULT_T> HttpPost<REQUEST_T, RESULT_T>(string postUri, REQUEST_T postData) where RESULT_T : new()
 		{
 			return await httpNetwork.HttpPostRequest<REQUEST_T, RESULT_T>(postUri, postData);
 		}
 
-		// 통신에 사용할 이벤트 풀을 생성하는 메소드.
+
+		/// <summary>
+		/// 통신에 사용할 이벤트 풀을 생성하는 메소드.
+		/// </summary>
+		/// <param name="maxConnections"></param>
 		private void MakeEventPools(int maxConnections)
 		{
 			SocketAsyncEventArgs arg;
@@ -54,9 +67,9 @@ namespace NetworkLibrary
 			{
 				// Receive Pool 생성
 				{
-					arg = new SocketAsyncEventArgs();
+					arg            = new SocketAsyncEventArgs();
 					arg.Completed += new EventHandler<SocketAsyncEventArgs>(OnReceiveCompleted);
-					arg.UserToken = null;
+					arg.UserToken  = null;
 
 					bufferManager.SetBuffer(arg);
 
@@ -65,9 +78,9 @@ namespace NetworkLibrary
 
 				// Send Pool 생성
 				{
-					arg = new SocketAsyncEventArgs();
+					arg            = new SocketAsyncEventArgs();
 					arg.Completed += new EventHandler<SocketAsyncEventArgs>(OnSendCompleted);
-					arg.UserToken = null;
+					arg.UserToken  = null;
 
 					// send 버퍼는 보낼 때 따로 지정.
 					arg.SetBuffer(null, 0, 0);
@@ -77,23 +90,41 @@ namespace NetworkLibrary
 			}
 		}
 
-		private void OnSendCompleted(object sender, SocketAsyncEventArgs e)
+
+		/// <summary>
+		/// 비동기 Send가 완료되었을 경우 호출되는 콜백 메서드.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="eventArgs"></param>
+		private void OnSendCompleted(object sender, SocketAsyncEventArgs eventArgs)
 		{
 			throw new NotImplementedException();
 		}
 
-		private void OnReceiveCompleted(object sender, SocketAsyncEventArgs e)
+
+		/// <summary>
+		/// 비동기 Receive가 완료되었을 경우 호출되는 콜백 메서드.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="eventArgs"></param>
+		private void OnReceiveCompleted(object sender, SocketAsyncEventArgs eventArgs)
 		{
-			if (e.LastOperation == SocketAsyncOperation.Receive)
+			if (eventArgs.LastOperation == SocketAsyncOperation.Receive)
 			{
-				ProcessReceive(e);
+				ProcessReceive(eventArgs);
 				return;
 			}
 
 			throw new ArgumentException("OnReceivedCompleted error. Last operation on the socket was not a receive.");
 		}
 
-		// clientListener를 통해 새로운 클라이언트를 받기 시작하는 메소드.
+
+		/// <summary>
+		/// clientListener를 통해 새로운 클라이언트를 받기 시작하는 메소드.
+		/// </summary>
+		/// <param name="host"></param>
+		/// <param name="port"></param>
+		/// <param name="backlog"></param>
 		public void Listen(string host, int port, int backlog)
 		{
 			clientListener = new ClientListener();
@@ -101,7 +132,12 @@ namespace NetworkLibrary
 			clientListener.StartListen(host, port, backlog);
 		}
 
-		// 새로운 클라이언트가 접속하였을 때 호출되는 메소드.
+
+		/// <summary>
+		/// 새로운 클라이언트가 접속하였을 때 호출되는 메소드.
+		/// </summary>
+		/// <param name="clientSocket"></param>
+		/// <param name="token"></param>
 		private void OnNewClientConnected(Socket clientSocket, object token)
 		{
 			Console.WriteLine($"New Client Connected. Socket handle({clientSocket.Handle})");
@@ -122,6 +158,13 @@ namespace NetworkLibrary
 			BeginReceive(clientSocket, receiveArgs, sendArgs);
 		}
 
+
+		/// <summary>
+		/// 비동기 Receive를 시작 시키는 메서드.
+		/// </summary>
+		/// <param name="clientSocket"></param>
+		/// <param name="receiveArgs"></param>
+		/// <param name="sendArgs"></param>
 		private void BeginReceive(Socket clientSocket, SocketAsyncEventArgs receiveArgs, SocketAsyncEventArgs sendArgs)
 		{
 			try
@@ -139,19 +182,24 @@ namespace NetworkLibrary
 			}
 		}
 
-		private void ProcessReceive(SocketAsyncEventArgs e)
+
+		/// <summary>
+		/// 비동기 Receive를 진행하는 메서드.
+		/// </summary>
+		/// <param name="eventArgs"></param>
+		private void ProcessReceive(SocketAsyncEventArgs eventArgs)
 		{
-			Session session = e.UserToken as Session;
-			if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
+			Session session = eventArgs.UserToken as Session;
+			if (eventArgs.BytesTransferred > 0 && eventArgs.SocketError == SocketError.Success)
 			{
 				// 이 이후의 작업은 각 세션에서 진행한다.
-				session.OnReceive(e.Buffer, e.Offset, e.BytesTransferred);
+				session.OnReceive(eventArgs.Buffer, eventArgs.Offset, eventArgs.BytesTransferred);
 
 				// 다음 메시지 수신.
-				var pending = session.Socket.ReceiveAsync(e);
+				var pending = session.Socket.ReceiveAsync(eventArgs);
 				if (pending == false)
 				{
-					ProcessReceive(e);
+					ProcessReceive(eventArgs);
 				}
 			}
 			else

@@ -15,6 +15,8 @@ namespace ManageLogicLibrary
 		public SessionManager(ConnectServerManager serverManager)
 		{
 			this.serverManager = serverManager;
+
+			sessionList = new List<Session>();
 		}
 
 

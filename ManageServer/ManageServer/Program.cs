@@ -26,7 +26,7 @@ namespace ManageServer
 
 			service.Listen(listenAddress, listenPort, backlog);
 
-			logger.Debug($"Manage Server Initialized. Address({listenAddress}), Port({listenPort}), Backlog({backlog})");
+			Console.WriteLine($"Manage Server Initialized. Address({listenAddress}), Port({listenPort}), Backlog({backlog})");
 
 			while (true)
 			{
