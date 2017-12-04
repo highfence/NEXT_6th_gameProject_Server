@@ -15,19 +15,21 @@ namespace ManageLogicLibrary
 		DoubleBufferingQueue messageQueue;
 		AutoResetEvent messageEvent;
 		ISessionManageable serverManager;
+		ISessionManageable sessionManager;
 
 		
 		public ManageLogicProcessor(NetworkService service, ISessionManageable serverManager)
 		{
 			networkService = service;
 			this.serverManager = serverManager;
+			this.sessionManager = new SessionManager(serverManager as ConnectServerManager) as ISessionManageable;
 
 			messageQueue = new DoubleBufferingQueue();
 			messageEvent = new AutoResetEvent(false);
 
-			var connectedServerManager = (ConnectServerManager)this.serverManager;
+			var sessionManager = (SessionManager)this.sessionManager;
 
-			networkService.OnSessionCreated += connectedServerManager.Add;
+			networkService.OnSessionCreated += sessionManager.Add;
 		}
 
 

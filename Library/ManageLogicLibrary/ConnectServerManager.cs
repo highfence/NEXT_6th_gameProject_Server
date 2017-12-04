@@ -34,11 +34,11 @@ namespace ManageLogicLibrary
 		}
 
 
-		public void Add(Session session)
+		public void Add(ServerSession session)
 		{
 			lock (connectedServers)
 			{
-				connectedServers.Add(new ServerSession(session));
+				connectedServers.Add(session);
 			}
 		}
 

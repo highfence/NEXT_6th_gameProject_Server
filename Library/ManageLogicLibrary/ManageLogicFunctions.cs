@@ -14,18 +14,21 @@ namespace ManageLogicLibrary
 		{
 			var req = MessagePackSerializer.Deserialize<ServerRegistReq>(receivedPacket.Body);
 			var res = new ServerRegistRes();
+			var sessionManager = this.sessionManager as SessionManager;
 
 			try
 			{
 				var serverManager = (ConnectServerManager)this.serverManager;
-				var serverSession = serverManager.GetOwner(receivedPacket.Owner);
+				var serverSession = sessionManager.GetServerSession(receivedPacket.Owner);
 
-				serverSession.SetServerInfo(req.Address, req.Port);
+				var insertSession = new ServerSession(serverSession);
+				insertSession.SetServerInfo(req.Address, req.Port);
 
 				res.Result = (int)ErrorCode.None;
 			}
 			catch (Exception e)
 			{
+				logger.Debug($"Server Regist failed. Exception Msg : {e.Message}");
 				res.Result = (int)ErrorCode.ServerRegistFail;
 			}
 
