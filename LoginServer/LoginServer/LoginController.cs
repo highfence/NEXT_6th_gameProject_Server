@@ -69,7 +69,7 @@ namespace LoginServer
 				resPacket.Result = (int)ErrorCode.None;
 
 #if DEBUG
-				// TODO :: 이부분 고쳐야 함.
+				// TODO :: 이부분을 로그인 서버와의 통신으로 받아오는 것으로 고쳐야 함.
 				resPacket.ManageServerAddr = "localhost";
 				resPacket.ManageServerPort = 19000;
 #endif
