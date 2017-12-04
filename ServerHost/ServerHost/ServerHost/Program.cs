@@ -16,10 +16,14 @@ namespace ServerHost
 			var logicProcessor = new LogicProcessor(service, userManager);
 			logicProcessor.StartLogic();
 
-			service.Initialize(logicProcessor, userManager);
-			service.Listen("0.0.0.0", 23452, 100);
+			var listenAddress = "0.0.0.0";
+			var listenPort = 23452;
+			var backlog = 100;
 
-			Console.WriteLine($"Server Initialized. Port(23452)");
+			service.Initialize(logicProcessor, userManager);
+			service.Listen(listenAddress, listenPort, backlog);
+
+			Console.WriteLine($"Server Initialized. Address({listenAddress}), Port({listenPort}), Backlog({backlog})");
 
             while (true)
 			{

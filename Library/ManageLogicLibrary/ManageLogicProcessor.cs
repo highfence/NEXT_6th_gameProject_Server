@@ -22,14 +22,26 @@ namespace ManageLogicLibrary
 		{
 			networkService = service;
 			this.serverManager = serverManager;
-			this.sessionManager = new SessionManager(serverManager as ConnectServerManager) as ISessionManageable;
 
 			messageQueue = new DoubleBufferingQueue();
 			messageEvent = new AutoResetEvent(false);
+		}
 
-			var sessionManager = (SessionManager)this.sessionManager;
 
-			networkService.OnSessionCreated += sessionManager.Add;
+		public void SessionManagerSetting(ISessionManageable sessionManager)
+		{
+			this.sessionManager = sessionManager;
+
+			var manager = sessionManager as SessionManager;
+
+			networkService.OnSessionCreated += manager.Add;
+		}
+
+
+		public void StartLogic()
+		{
+			var logicThread = new Thread(LogicThread);
+			logicThread.Start();
 		}
 
 
