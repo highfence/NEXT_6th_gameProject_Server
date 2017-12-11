@@ -3896,9 +3896,6 @@
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
       "projectUniqueName": "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
       "projectName": "NetworkLibrary",
@@ -3934,10 +3931,6 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
-          "MessagePackAnalyzer": {
-            "target": "Package",
-            "version": "1.6.0"
-          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
@@ -3948,13 +3941,17 @@
             "target": "Package",
             "version": "1.7.2"
           },
-          "NLog.Extensions.Logging": {
+          "MessagePackAnalyzer": {
             "target": "Package",
-            "version": "1.0.0-rtm-rc2"
+            "version": "1.6.0"
           },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "10.0.3"
+          },
+          "NLog.Extensions.Logging": {
+            "target": "Package",
+            "version": "1.0.0-rtm-rc2"
           }
         },
         "imports": [

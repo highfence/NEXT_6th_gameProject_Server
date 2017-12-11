@@ -12,16 +12,19 @@ namespace LogicLibrary
 
         int currentUserNum = 0;
 
-        User[] player;
+        List<User> player = new List<User>();
         Stack<int> freeUserIndex;
 
         public UserManager(int poolCapacity)
         {
-            player = new User[poolCapacity];
+            
 
             for (int i = 0; i < poolCapacity; ++i)
             {
+                player.Add(new User());
+
                 freeUserIndex.Push(i);
+                player[i].Init();
                 player[i].indexInPool = i;
             }
         }
@@ -133,8 +136,8 @@ namespace LogicLibrary
                 return null;
             }
 
-            //TODO:원래 리스트로 사용하는 유저를 찾을 까 했는데 일단 다검색하는걸로.
-            for (int i = 0; i < player.Length; ++i)
+            //TODO:원래 리스트로 사용하는 유저를 관리하면서 찾을 까 했는데 일단 다검색하는걸로.
+            for (int i = 0; i < player.Count; ++i)
             {
 
                 if (player[i].session == session)

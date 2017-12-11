@@ -4386,26 +4386,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
+    "C:\\Users\\LittleHill\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
-      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "projectUniqueName": "C:\\Dev\\NextManComming\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
       "projectName": "ServerHost",
-      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
-      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
-      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
+      "projectPath": "C:\\Dev\\NextManComming\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "packagesPath": "C:\\Users\\LittleHill\\.nuget\\packages\\",
+      "outputPath": "C:\\Dev\\NextManComming\\Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LittleHill\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4418,11 +4415,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
-              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
+            "C:\\Dev\\NextManComming\\Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
+              "projectPath": "C:\\Dev\\NextManComming\\Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
             },
-            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
-              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
+            "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
+              "projectPath": "C:\\Dev\\NextManComming\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
             }
           }
         }
@@ -4436,10 +4433,6 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "MessagePackAnalyzer": {
-            "target": "Package",
-            "version": "1.6.0"
-          },
           "Microsoft.NETCore.App": {
             "target": "Package",
             "version": "2.0",
@@ -4449,13 +4442,17 @@
             "target": "Package",
             "version": "1.7.2"
           },
-          "NLog.Extensions.Logging": {
+          "MessagePackAnalyzer": {
             "target": "Package",
-            "version": "1.0.0-rtm-rc2"
+            "version": "1.6.0"
           },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "10.0.3"
+          },
+          "NLog.Extensions.Logging": {
+            "target": "Package",
+            "version": "1.0.0-rtm-rc2"
           }
         },
         "imports": [
