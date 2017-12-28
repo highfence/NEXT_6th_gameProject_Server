@@ -1,279 +1,172 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace NetworkLibrary
 {
     public class NetworkService
     {
-        SocketAsyncEventArgsPool ReceiveEventArgsPool;
-        SocketAsyncEventArgsPool SendEventArgsPool;
+		ClientListener clientListener;
 
-        public Action<SessionClient> SessionClientCreatedCallBack = null;
-        public Action<SessionServer> SessionServerCreatedCallBack = null;
+		SocketAsyncEventArgsPool receiveEventArgsPool;
+		SocketAsyncEventArgsPool sendEventArgsPool;
 
-        public IPacketDispatcher PacketDispatcher { get; private set; }
-        public UserTokenManager UserManager { get; private set; }
+		HttpNetwork			httpNetwork;
+		BufferManager		bufferManager;
+		IUserManager		userManager;
+		IPacketLogicHandler logicHandler;
 
-        Int64 SequenceId = 0;
+		public delegate void SessionHandler(ClientSession session);
+		public SessionHandler OnSessionCreated { get; set; }
 
-        /// <summary>
-        /// 로직 스레드를 사용하려면 use_logicthread를 true로 설정한다.
-        ///  -> 하나의 로직 스레드를 생성한다.
-        ///  -> 메시지는 큐잉되어 싱글 스레드에서 처리된다.
-        /// 
-        /// 로직 스레드를 사용하지 않으려면 use_logicthread를 false로 설정한다.
-        ///  -> 별도의 로직 스레드는 생성하지 않는다.
-        ///  -> IO스레드에서 직접 메시지 처리를 담당하게 된다.
-        /// </summary>
-        /// <param name="use_logicthread">true=Create single logic thread. false=Not use any logic thread.</param>
-        public NetworkService(IPacketDispatcher userPacketDispatcher = null)
-        {
-            UserManager = new UserTokenManager();
+		public void Initialize(IPacketLogicHandler logicHandler, IUserManager userManager)
+		{
+			// TODO :: 서버 config 클래스 구현.
+			const int maxConnections = 10000;
+			const int bufferSize = 1024;
+			const int preAllocCount = 2;
 
-            if (userPacketDispatcher == null)
-            {
-                PacketDispatcher = new DefaultPacketDispatcher();
-            }
-            else
-            {
-                PacketDispatcher = userPacketDispatcher;
-            }
-        }
+			bufferManager = new BufferManager(maxConnections * bufferSize * preAllocCount, bufferSize);
+			bufferManager.InitBuffer();
 
+			receiveEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
+			sendEventArgsPool = new SocketAsyncEventArgsPool(maxConnections);
+			MakeEventPools(maxConnections);
 
-        // Initializes the server by preallocating reusable buffers and 
-        // context objects.  These objects do not need to be preallocated 
-        // or reused, but it is done this way to illustrate how the API can 
-        // easily be used to create reusable objects to increase server performance.
-        //
-        public void Initialize(ServerOption serverOption)
-        {
-            // receive버퍼만 할당해 놓는다.
-            // send버퍼는 보낼때마다 할당하든 풀에서 얻어오든 하기 때문에.
-            int pre_alloc_count = 1;
-            var totalBytes = serverOption.MaxConnectionCount * serverOption.ReceiveBufferSize * pre_alloc_count;
-            BufferManager buffer_manager = new BufferManager(totalBytes, serverOption.ReceiveBufferSize);
+			httpNetwork = new HttpNetwork();
 
-            // Allocates one large byte buffer which all I/O operations use a piece of.  This gaurds 
-            // against memory fragmentation
-            buffer_manager.InitBuffer();
+			this.userManager = userManager;
+			this.logicHandler = logicHandler;
+		}
 
+		// Http Post를 보내는 메소드.
+		public async Task<RESULT_T> HttpPost<REQUEST_T, RESULT_T>(string postUri, REQUEST_T postData) where RESULT_T : new()
+		{
+			return await httpNetwork.HttpPostRequest<REQUEST_T, RESULT_T>(postUri, postData);
+		}
 
-            ReceiveEventArgsPool = new SocketAsyncEventArgsPool();
-            SendEventArgsPool = new SocketAsyncEventArgsPool();
+		// 통신에 사용할 이벤트 풀을 생성하는 메소드.
+		private void MakeEventPools(int maxConnections)
+		{
+			SocketAsyncEventArgs arg;
 
-            // preallocate pool of SocketAsyncEventArgs objects
-            SocketAsyncEventArgs arg;
+			for (var i = 0; i < maxConnections; ++i)
+			{
+				// Receive Pool 생성
+				{
+					arg = new SocketAsyncEventArgs();
+					arg.Completed += new EventHandler<SocketAsyncEventArgs>(OnReceiveCompleted);
+					arg.UserToken = null;
 
-            for (int i = 0; i < serverOption.MaxConnectionCount; i++)
-            {
-                // 더이상 UserToken을 미리 생성해 놓지 않는다.
-                // 다수의 클라이언트에서 접속 -> 메시지 송수신 -> 접속 해제를 반복할 경우 문제가 생김.
-                // 일단 on_new_client에서 그때 그때 생성하도록 하고,
-                // 소켓이 종료되면 null로 세팅하여 오류 발생시 확실히 드러날 수 있도록 코드를 변경한다.
+					bufferManager.SetBuffer(arg);
 
-                // receive pool
-                {
-                    //Pre-allocate a set of reusable SocketAsyncEventArgs
-                    arg = new SocketAsyncEventArgs();
-                    arg.Completed += new EventHandler<SocketAsyncEventArgs>(ReceiveCompleted);
-                    arg.UserToken = null;
+					receiveEventArgsPool.Push(arg);
+				}
 
-                    // assign a byte buffer from the buffer pool to the SocketAsyncEventArg object
-                    buffer_manager.SetBuffer(arg);
+				// Send Pool 생성
+				{
+					arg = new SocketAsyncEventArgs();
+					arg.Completed += new EventHandler<SocketAsyncEventArgs>(OnSendCompleted);
+					arg.UserToken = null;
 
-                    // add SocketAsyncEventArg to the pool
-                    ReceiveEventArgsPool.Push(arg);
-                }
+					// send 버퍼는 보낼 때 따로 지정.
+					arg.SetBuffer(null, 0, 0);
 
+					sendEventArgsPool.Push(arg);
+				}
+			}
+		}
 
-                // send pool
-                {
-                    //Pre-allocate a set of reusable SocketAsyncEventArgs
-                    arg = new SocketAsyncEventArgs();
-                    arg.Completed += new EventHandler<SocketAsyncEventArgs>(SendCompleted);
-                    arg.UserToken = null;
+		private void OnSendCompleted(object sender, SocketAsyncEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 
-                    // send버퍼는 보낼때 설정한다. SetBuffer가 아닌 BufferList를 사용.
-                    arg.SetBuffer(null, 0, 0);
+		private void OnReceiveCompleted(object sender, SocketAsyncEventArgs e)
+		{
+			if (e.LastOperation == SocketAsyncOperation.Receive)
+			{
+				ProcessReceive(e);
+				return;
+			}
 
-                    // add SocketAsyncEventArg to the pool
-                    SendEventArgsPool.Push(arg);
-                }
-            }
-        }
+			throw new ArgumentException("OnReceivedCompleted error. Last operation on the socket was not a receive.");
+		}
 
-        public void Listen(string host, int port, int backlog, SocketOption socketOption)
-        {
-            Listener client_listener = new Listener();
-            client_listener.OnNewClientCallback += OnNewClient;
-            client_listener.Start(host, port, backlog, socketOption);
+		// clientListener를 통해 새로운 클라이언트를 받기 시작하는 메소드.
+		public void Listen(string host, int port, int backlog)
+		{
+			clientListener = new ClientListener();
+			clientListener.OnClientConnected += OnNewClientConnected;
+			clientListener.StartListen(host, port, backlog);
+		}
 
-            // heartbeat.
-            byte check_interval = 10;
-            UserManager.StartHeartbeatChecking(check_interval, check_interval);
-        }
+		// 새로운 클라이언트가 접속하였을 때 호출되는 메소드.
+		private void OnNewClientConnected(Socket clientSocket, object token)
+		{
+			Console.WriteLine($"New Client Connected. Socket handle({clientSocket.Handle})");
 
-        /// <summary>
-        /// 원격 서버에 접속 성공 했을 때 호출됩니다.
-        /// </summary>
-        /// <param name="socket"></param>
-        public void OnConnectCompleted(Socket socket, Session token)
-        {
-            token.OnSessionClosed += this.OnSessionClosed;
-            UserManager.Add(token);
+			var receiveArgs = receiveEventArgsPool.Pop();
+			var sendArgs	= sendEventArgsPool.Pop();
 
-            // SocketAsyncEventArgsPool에서 빼오지 않고 그때 그때 할당해서 사용한다.
-            // 풀은 서버에서 클라이언트와의 통신용으로만 쓰려고 만든것이기 때문이다.
-            // 클라이언트 입장에서 서버와 통신을 할 때는 접속한 서버당 두개의 EventArgs만 있으면 되기 때문에 그냥 new해서 쓴다.
-            // 서버간 연결에서도 마찬가지이다.
-            // 풀링처리를 하려면 c->s로 가는 별도의 풀을 만들어서 써야 한다.
-            SocketAsyncEventArgs receive_event_arg = new SocketAsyncEventArgs();
-            receive_event_arg.Completed += new EventHandler<SocketAsyncEventArgs>(ReceiveCompleted);
-            receive_event_arg.UserToken = token;
-            receive_event_arg.SetBuffer(new byte[1024], 0, 1024);
+			var session = new ClientSession(logicHandler);
+			receiveArgs.UserToken = session;
+			sendArgs.UserToken	  = session;
 
-            SocketAsyncEventArgs send_event_arg = new SocketAsyncEventArgs();
-            send_event_arg.Completed += new EventHandler<SocketAsyncEventArgs>(SendCompleted);
-            send_event_arg.UserToken = token;
-            send_event_arg.SetBuffer(null, 0, 0);
+			session.SetEventArgs(receiveArgs, sendArgs);
+			session.Socket = clientSocket;
 
-            BeginReceive(socket, receive_event_arg, send_event_arg);
-        }
+			OnSessionCreated?.Invoke(receiveArgs.UserToken as ClientSession);
 
-        /// <summary>
-        /// 새로운 클라이언트가 접속 성공 했을 때 호출됩니다.
-        /// AcceptAsync의 콜백 매소드에서 호출되며 여러 스레드에서 동시에 호출될 수 있기 때문에 공유자원에 접근할 때는 주의해야 합니다.
-        /// </summary>
-        /// <param name="client_socket"></param>
-        void OnNewClient(Socket client_socket, object token)
-        {
-            // UserToken은 매번 새로 생성하여 깨끗한 인스턴스로 넣어준다.
-            var uniqueId = Interlocked.Increment(ref SequenceId);
+			// 클라이언트로부터 데이터를 수신할 준비를 한다.
+			BeginReceive(clientSocket, receiveArgs, sendArgs);
+		}
 
-            var user_token = new SessionClient(uniqueId, PacketDispatcher);
-            user_token.OnSessionClosed += this.OnSessionClosed;
+		private void BeginReceive(Socket clientSocket, SocketAsyncEventArgs receiveArgs, SocketAsyncEventArgs sendArgs)
+		{
+			try
+			{
+				// 비동기 수신 시작.
+				bool pending = clientSocket.ReceiveAsync(receiveArgs);
+				if (pending == false)
+				{
+					ProcessReceive(receiveArgs);
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("BeginReceive failed. Message : " + e.Message);
+			}
+		}
 
+		private void ProcessReceive(SocketAsyncEventArgs e)
+		{
+			ClientSession session = e.UserToken as ClientSession;
+			if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
+			{
+				// 이 이후의 작업은 각 세션에서 진행한다.
+				session.OnReceive(e.Buffer, e.Offset, e.BytesTransferred);
 
-            UserManager.Add(user_token);
-
-            // 플에서 하나 꺼내와 사용한다.
-            SocketAsyncEventArgs receive_args = this.ReceiveEventArgsPool.Pop();
-            SocketAsyncEventArgs send_args = this.SendEventArgsPool.Pop();
-
-            receive_args.UserToken = user_token;
-            send_args.UserToken = user_token;
-
-
-            user_token.OnConnected();
-
-            SessionClientCreatedCallBack?.Invoke(user_token);
-
-            BeginReceive(client_socket, receive_args, send_args);
-
-            Packet msg = Packet.Create((short)NetworkDefine.SYS_START_HEARTBEAT);
-            var send_interval = (byte)5;
-            msg.Push(send_interval);
-            user_token.Send(msg);
-        }
-
-        void BeginReceive(Socket socket, SocketAsyncEventArgs receive_args, SocketAsyncEventArgs send_args)
-        {
-            // receive_args, send_args 아무곳에서나 꺼내와도 된다. 둘다 동일한 CUserToken을 물고 있다.
-            Session token = receive_args.UserToken as Session;
-            token.SetEventArgs(receive_args, send_args);
-            // 생성된 클라이언트 소켓을 보관해 놓고 통신할 때 사용한다.
-            token.Sock = socket;
-
-            bool pending = socket.ReceiveAsync(receive_args);
-            if (!pending)
-            {
-                ProcessReceive(receive_args);
-            }
-        }
-
-        // This method is called whenever a receive or send operation is completed on a socket 
-        //
-        // <param name="e">SocketAsyncEventArg associated with the completed receive operation</param>
-        void ReceiveCompleted(object sender, SocketAsyncEventArgs e)
-        {
-            if (e.LastOperation == SocketAsyncOperation.Receive)
-            {
-                ProcessReceive(e);
-                return;
-            }
-
-            throw new ArgumentException("The last operation completed on the socket was not a receive.");
-        }
-
-        // This method is called whenever a receive or send operation is completed on a socket 
-        //
-        // <param name="e">SocketAsyncEventArg associated with the completed send operation</param>
-        void SendCompleted(object sender, SocketAsyncEventArgs e)
-        {
-            try
-            {
-                Session token = e.UserToken as Session;
-                token.ProcessSend(e);
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        // This method is invoked when an asynchronous receive operation completes. 
-        // If the remote host closed the connection, then the socket is closed.  
-        //
-        private void ProcessReceive(SocketAsyncEventArgs e)
-        {
-            Session token = e.UserToken as Session;
-            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
-            {
-                token.OnReceive(e.Buffer, e.Offset, e.BytesTransferred);
-
-                // Keep receive.
-                bool pending = token.Sock.ReceiveAsync(e);
-                if (!pending)
-                {
-                    // Oh! stack overflow??
-                    ProcessReceive(e);
-                }
-            }
-            else
-            {
-                try
-                {
-                    token.Close();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Already closed this socket.");
-                }
-            }
-        }
-
-        void OnSessionClosed(Session token)
-        {
-            UserManager.Remove(token);
-
-            // Free the SocketAsyncEventArg so they can be reused by another client
-            // 버퍼는 반환할 필요가 없다. SocketAsyncEventArg가 버퍼를 물고 있기 때문에
-            // 이것을 재사용 할 때 물고 있는 버퍼를 그대로 사용하면 되기 때문이다.
-            if (ReceiveEventArgsPool != null)
-            {
-                ReceiveEventArgsPool.Push(token.ReceiveEventArgs);
-            }
-
-            if (SendEventArgsPool != null)
-            {
-                SendEventArgsPool.Push(token.SendEventArgs);
-            }
-
-            token.SetEventArgs(null, null);
-        }
-    }
+				// 다음 메시지 수신.
+				var pending = session.Socket.ReceiveAsync(e);
+				if (pending == false)
+				{
+					ProcessReceive(e);
+				}
+			}
+			else
+			{
+				try
+				{
+					session.Close();
+				}
+				catch (Exception)
+				{
+					Console.WriteLine("Already closed socket.");
+				}
+			}
+		}
+	}
 }

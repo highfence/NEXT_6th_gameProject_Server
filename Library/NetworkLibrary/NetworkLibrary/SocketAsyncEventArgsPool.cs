@@ -1,31 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Collections.Concurrent;
+using System.Text;
 
 namespace NetworkLibrary
 {
-    class SocketAsyncEventArgsPool
+	// https://msdn.microsoft.com/ko-kr/library/system.net.sockets.socketasynceventargs.socketasynceventargs(v=vs.100).aspx
+	// 의 클래스를 그대로 사용.
+	internal class SocketAsyncEventArgsPool
     {
-        ConcurrentBag<SocketAsyncEventArgs> Pool = new ConcurrentBag<SocketAsyncEventArgs>();
+		Stack<SocketAsyncEventArgs> m_pool;
 
-        public void Push(SocketAsyncEventArgs item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException("Items added to a SocketAsyncEventArgsPool cannot be null");
-            }
+		// Initializes the object pool to the specified size
+		//
+		// The "capacity" parameter is the maximum number of 
+		// SocketAsyncEventArgs objects the pool can hold
+		public SocketAsyncEventArgsPool(int capacity)
+		{
+			m_pool = new Stack<SocketAsyncEventArgs>(capacity);
+		}
 
-            Pool.Add(item);
-        }
+		// Add a SocketAsyncEventArg instance to the pool
+		//
+		//The "item" parameter is the SocketAsyncEventArgs instance 
+		// to add to the pool
+		public void Push(SocketAsyncEventArgs item)
+		{
+			if (item == null) { throw new ArgumentNullException("Items added to a SocketAsyncEventArgsPool cannot be null"); }
+			lock (m_pool)
+			{
+				m_pool.Push(item);
+			}
+		}
 
-        public SocketAsyncEventArgs Pop()
-        {
-            if (Pool.TryTake(out var result))
-            {
-                return result;
-            }
+		// Removes a SocketAsyncEventArgs instance from the pool
+		// and returns the object removed from the pool
+		public SocketAsyncEventArgs Pop()
+		{
+			lock (m_pool)
+			{
+				return m_pool.Pop();
+			}
+		}
 
-            return null;
-        }
-    }
+		// The number of SocketAsyncEventArgs instances in the pool
+		public int Count
+		{
+			get { return m_pool.Count; }
+		}
+
+
+	}
 }
