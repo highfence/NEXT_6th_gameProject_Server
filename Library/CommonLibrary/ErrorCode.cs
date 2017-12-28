@@ -32,5 +32,7 @@ namespace CommonLibrary
 
 		// 900 번대는 LoginServer 에러 코드.
 		LoginRequestException = 900,
+
+        CreateUserRequestException = 910,
 	}
 }

@@ -1,8 +1,8 @@
 {
-	"LoginServerAddress" : "127.0.0.1",
+	"LoginServerAddress" : "localhost",
 	"LoginServerPort" : 18000,
-	"ManageServerAddress" : "127.0.0.1",
+	"ManageServerAddress" : "localhost",
 	"ManageServerPort" : 19000,
-	"DBServerAddress" : "127.0.0.1",
+	"DBServerAddress" : "localhost",
 	"DBServerPort" : 20000,
 }

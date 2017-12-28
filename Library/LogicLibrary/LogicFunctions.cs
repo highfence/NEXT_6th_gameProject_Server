@@ -30,6 +30,7 @@ namespace LogicLibrary
 				logger.Debug($"HttpPost TokenValidationReq failed. ErrorCode({tokenValidationRes.Result})");
 			}
 
+
 			var loginRes = new ServerConnectRes()
 			{
 				Result = tokenValidationRes.Result

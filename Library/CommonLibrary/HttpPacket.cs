@@ -21,6 +21,17 @@ namespace CommonLibrary.HttpPacket
 		public int ManageServerPort;
 	}
 
+    public struct CreateUserReq
+    {
+        public string UserId;
+        public string UserPw;
+    }
+
+    public struct CreateUserRes
+    {
+        public int Result;
+    }
+
 	// 클라이언트의 로그 아웃 요청 패킷.
 	public struct LogoutReq
 	{

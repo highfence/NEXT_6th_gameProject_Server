@@ -69,7 +69,8 @@ namespace LoginServer
 				resPacket.Result = (int)ErrorCode.None;
 
 #if DEBUG
-				// TODO :: 이부분을 로그인 서버와의 통신으로 받아오는 것으로 고쳐야 함.
+				// TODO :: 이부분을 관리 서버와의 통신으로 받아오는 것으로 고쳐야 함.
+                //우선 직접적으로 게임서버에 접속하도록 한다. 왜냐면 다들 취업을 해서 개발시간이 줄어 들었기 때문이다.
 				resPacket.ManageServerAddr = "localhost";
 				resPacket.ManageServerPort = 19000;
 #endif

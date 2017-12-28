@@ -1741,7 +1741,7 @@
       ]
     },
     "Newtonsoft.Json/10.0.3": {
-      "sha512": "wBM7i7i3U2WX0ecor4zdVGvgrwFUjuigBoHKiL+nH39fCOpCPjBY3RDqJM32edvdyTAVdjzlccHsg41+/+zpSA==",
+      "sha512": "hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
       "type": "package",
       "path": "newtonsoft.json/10.0.3",
       "files": [
@@ -4406,7 +4406,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\NEXT\\.nuget\\packages\\": {},
+    "C:\\Users\\LongShore\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -4415,18 +4416,20 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "projectUniqueName": "C:\\dev\\6thProject\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
       "projectName": "ServerHost",
-      "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
-      "packagesPath": "C:\\Users\\NEXT\\.nuget\\packages\\",
-      "outputPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
+      "projectPath": "C:\\dev\\6thProject\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
+      "packagesPath": "C:\\Users\\LongShore\\.nuget\\packages\\",
+      "outputPath": "C:\\dev\\6thProject\\Server\\ServerHost\\ServerHost\\ServerHost\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\NEXT\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\LongShore\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -4438,11 +4441,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
-              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
+            "C:\\dev\\6thProject\\Server\\Library\\LogicLibrary\\LogicLibrary.csproj": {
+              "projectPath": "C:\\dev\\6thProject\\Server\\Library\\LogicLibrary\\LogicLibrary.csproj"
             },
-            "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
-              "projectPath": "G:\\Projects\\NEXT_6th_gameProject_Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
+            "C:\\dev\\6thProject\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj": {
+              "projectPath": "C:\\dev\\6thProject\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj"
             }
           }
         }
@@ -4456,26 +4459,26 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
+          "MessagePack": {
+            "target": "Package",
+            "version": "[1.7.2, )"
+          },
           "MessagePackAnalyzer": {
             "target": "Package",
-            "version": "1.6.0"
+            "version": "[1.6.0, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",
-            "version": "2.0",
+            "version": "[2.0.0, )",
             "autoReferenced": true
-          },
-          "MessagePack": {
-            "target": "Package",
-            "version": "1.7.2"
           },
           "NLog.Extensions.Logging": {
             "target": "Package",
-            "version": "1.0.0-rtm-rc2"
+            "version": "[1.0.0-rtm-rc2, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",
-            "version": "10.0.3"
+            "version": "[10.0.3, )"
           }
         },
         "imports": [
