@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 
 namespace NetworkLibrary
 {
@@ -10,18 +8,18 @@ namespace NetworkLibrary
 
 	class BufferManager
 	{
-		int        m_numBytes;              // the total number of bytes controlled by the buffer pool
-		byte[]     m_buffer;                // the underlying byte array maintained by the Buffer Manager
-		Stack<int> m_freeIndexPool;      
-		int        m_currentIndex;
-		int        m_bufferSize;
+		int        numBytes;              // the total number of bytes controlled by the buffer pool
+		byte[]     buffer;                // the underlying byte array maintained by the Buffer Manager
+		Stack<int> freeIndexPool;      
+		int        currentIndex;
+		int        bufferSize;
 
 		public BufferManager(int totalBytes, int bufferSize)
 		{
-			m_numBytes = totalBytes;
-			m_currentIndex = 0;
-			m_bufferSize = bufferSize;
-			m_freeIndexPool = new Stack<int>();
+			numBytes = totalBytes;
+			currentIndex = 0;
+			this.bufferSize = bufferSize;
+			freeIndexPool = new Stack<int>();
 		}
 
 		// Allocates buffer space used by the buffer pool
@@ -29,7 +27,7 @@ namespace NetworkLibrary
 		{
 			// create one big large buffer and divide that 
 			// out to each SocketAsyncEventArg object
-			m_buffer = new byte[m_numBytes];
+			buffer = new byte[numBytes];
 		}
 
 		// Assigns a buffer from the buffer pool to the 
@@ -38,18 +36,18 @@ namespace NetworkLibrary
 		// <returns>true if the buffer was successfully set, else false</returns>
 		public bool SetBuffer(SocketAsyncEventArgs args)
 		{
-			if (m_freeIndexPool.Count > 0)
+			if (freeIndexPool.Count > 0)
 			{
-				args.SetBuffer(m_buffer, m_freeIndexPool.Pop(), m_bufferSize);
+				args.SetBuffer(buffer, freeIndexPool.Pop(), bufferSize);
 			}
 			else
 			{
-				if ((m_numBytes - m_bufferSize) < m_currentIndex)
+				if ((numBytes - bufferSize) < currentIndex)
 				{
 					return false;
 				}
-				args.SetBuffer(m_buffer, m_currentIndex, m_bufferSize);
-				m_currentIndex += m_bufferSize;
+				args.SetBuffer(buffer, currentIndex, bufferSize);
+				currentIndex += bufferSize;
 			}
 			return true;
 		}
@@ -58,7 +56,7 @@ namespace NetworkLibrary
 		// This frees the buffer back to the buffer pool
 		public void FreeBuffer(SocketAsyncEventArgs args)
 		{
-			m_freeIndexPool.Push(args.Offset);
+			freeIndexPool.Push(args.Offset);
 			args.SetBuffer(null, 0, 0);
 		}
 

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-public enum ErrorCode
+﻿public enum ErrorCode
 {
 	None = 0,
 
-
-
+    UserPoolIsFull = 400,
+    UserPoolIsEmpty = 401,
+    UserAlreadyExist = 402,
+    UserNotExist = 403,
 	// 800 ~ 900 번대는 임시로 DBServer, LoginServer 에러 코드로 쓰고 있겠음.
 	MongoDBFindError = 800,
 	MongoDBInsertError = 801,

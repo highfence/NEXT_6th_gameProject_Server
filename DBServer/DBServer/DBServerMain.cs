@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using CommonLibrary;
 
-namespace NextManComing_DBServer
+namespace DBServer
 {
 	public static class DBServerMain
 	{

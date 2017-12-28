@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using MessagePack;
+using NLog;
+using CommonLibrary.TcpPacket;
 
 namespace NetworkLibrary
 {
-    public class ClientSession
+	// 네트워크로 접속한 세션을 의미하는 객체.
+	public class Session
     {
+		static Logger logger = LogManager.GetCurrentClassLogger();
+
 		public Socket Socket { get; set; }
 
 		public SocketAsyncEventArgs ReceiveEventArgs { get; private set; }
 		public SocketAsyncEventArgs SendEventArgs	 { get; private set; }
 
-		BytePacker		    bytePacker;
-		IPacketLogicHandler packetLogicHandler;
+		BytePacker		  bytePacker;
+		IPacketHandleable packetLogicHandler;
 
-		// TODO :: 컨커런시 큐로 바꾸고 락 풀기.
 		Queue<Packet> sendQueue;
 
-		public ClientSession(IPacketLogicHandler packetLogicHandler)
+		public Session(IPacketHandleable packetLogicHandler)
 		{
 			sendQueue  = new Queue<Packet>();
 			bytePacker = new BytePacker();
@@ -37,6 +41,8 @@ namespace NetworkLibrary
 		{
 			lock (sendQueue)
 			{
+				logger.Debug($"SendQueue Count : {sendQueue.Count}");
+
 				// 큐가 비어있다면 큐에 추가하고 곧바로 비동기 전송 메서드 호출.
 				if (sendQueue.Count <= 0)
 				{
@@ -55,31 +61,35 @@ namespace NetworkLibrary
 		{
 			lock (sendQueue)
 			{
-				var sendPacket = sendQueue.Peek();
-
-				// 헤더에 패킷 사이즈를 기록한다.
-				var packetByte = MessagePackSerializer.Serialize(sendPacket);
-
-				var header = new PacketHeader()
+				try
 				{
-					BodySize = packetByte.Length,
-					PacketId = sendPacket.PacketId
-				};
+					var sendPacket = sendQueue.Peek();
 
-				var headerByte = MessagePackSerializer.Serialize(header);
+					// 헤더에 패킷 사이즈를 기록한다.
+					var header = new PacketHeader(sendPacket.Body.Length, sendPacket.PacketId);
 
-				// 이번에 보낼 패킷 사이즈만큼 버퍼 크기를 설정하고.
-				var buffer = new byte[headerByte.Length + packetByte.Length];
+					var headerByte = MessagePackSerializer.Serialize(header);
 
-				// 패킷 내용을 SocketAsyncEventArgs 버퍼에 복사한다.
-				Array.Copy(headerByte, 0, buffer, 0, headerByte.Length);
-				Array.Copy(packetByte, 0, buffer, headerByte.Length, packetByte.Length);
+					// 이번에 보낼 패킷 사이즈만큼 버퍼 크기를 설정하고.
+					var buffer = new byte[headerByte.Length + sendPacket.Body.Length];
 
-				// 비동기 전송 시작.
-				bool pending = Socket.SendAsync(SendEventArgs);
-				if (pending == false)
+					// 패킷 내용을 SocketAsyncEventArgs 버퍼에 복사한다.
+					Array.Copy(headerByte, 0, buffer, 0, headerByte.Length);
+					Array.Copy(sendPacket.Body, 0, buffer, headerByte.Length, sendPacket.Body.Length);
+
+					logger.Debug($"Send. PacketId({sendPacket.PacketId}), Session({sendPacket.Owner.Socket.Handle}) Header Bytes({headerByte.Length}), Body Bytes({sendPacket.Body.Length})");
+
+					// 비동기 전송 시작.
+					SendEventArgs.SetBuffer(buffer, 0, buffer.Length);
+					bool pending = Socket.SendAsync(SendEventArgs);
+					if (pending == false)
+					{
+						ProcessSend(SendEventArgs);
+					}
+				}
+				catch (Exception e)
 				{
-					ProcessSend(SendEventArgs);
+					logger.Error($"Exception! {e.Message}");
 				}
 			}
 		}
@@ -112,7 +122,7 @@ namespace NetworkLibrary
 		{
 			Console.WriteLine($"{System.Reflection.MethodBase.GetCurrentMethod().Name} Function Entry");
 
-			var req = MessagePackSerializer.Deserialize<LoginReq>(buffer);
+			var req = MessagePackSerializer.Deserialize<ServerConnectReq>(buffer);
 
 			Console.WriteLine($"Req UserId({req.UserId}, Token({req.Token}))");
 
