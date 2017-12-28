@@ -3916,6 +3916,9 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
       "projectUniqueName": "C:\\dev\\6thProject\\Server\\Library\\NetworkLibrary\\NetworkLibrary\\NetworkLibrary.csproj",
       "projectName": "NetworkLibrary",
