@@ -13,10 +13,10 @@ namespace LogicLibrary
 		NetworkService		 networkService;
 		DoubleBufferingQueue messageQueue;
 		AutoResetEvent		 messageEvent;
-		ISessionManageable	 userManager;
+		IUserSessionManageable	 userManager;
 
 
-		public LogicProcessor(NetworkService service, ISessionManageable userManager)
+		public LogicProcessor(NetworkService service, IUserSessionManageable userManager)
 		{
 			networkService   = service;
 			this.userManager = userManager;

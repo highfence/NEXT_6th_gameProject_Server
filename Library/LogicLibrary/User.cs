@@ -10,7 +10,7 @@ namespace LogicLibrary
 
         public int indexInPool { get; set; }
 
-        public ClientSession session { get; set; }
+        public Session session { get; set; }
 
         public Vector3 position { get; set; }
 
@@ -20,7 +20,7 @@ namespace LogicLibrary
         public int[] activeArea = new int[9];
         public int[] inActiveArea = new int[5];
 
-        public bool AllocUser(ClientSession newSession ,string id)
+        public bool AllocUser(Session newSession ,string id)
         {
             if(newSession == null)
             {

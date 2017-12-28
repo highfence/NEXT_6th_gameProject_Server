@@ -4412,6 +4412,9 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
       "projectUniqueName": "C:\\dev\\6thProject\\Server\\ServerHost\\ServerHost\\ServerHost\\ServerHost.csproj",
       "projectName": "ServerHost",

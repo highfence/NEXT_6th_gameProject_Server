@@ -6,6 +6,7 @@ using System;
 namespace ManageLogicLibrary
 {
 	// 현재 접속중인 서버를 관리하는 클래스.
+    /*
 	public class ConnectServerManager : ISessionManageable
 	{
 		List<ServerSession> connectedServers = new List<ServerSession>();
@@ -70,4 +71,5 @@ namespace ManageLogicLibrary
 			}
 		}
 	}
+    */
 }

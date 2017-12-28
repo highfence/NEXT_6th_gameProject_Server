@@ -13,14 +13,14 @@ namespace NetworkLibrary
 
 		HttpNetwork			httpNetwork;
 		BufferManager		bufferManager;
-		ISessionManageable	userManager;
+		IUserSessionManageable	userManager;
 		IPacketHandleable   logicHandler;
 
 		public delegate void SessionHandler(Session session);
 		public SessionHandler OnSessionCreated { get; set; }
 
 
-		public void Initialize(IPacketHandleable logicHandler, ISessionManageable userManager)
+		public void Initialize(IPacketHandleable logicHandler, IUserSessionManageable userManager)
 		{
 			// TODO :: 서버 config 클래스 구현.
 			const int maxConnections = 10000;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LogicLibrary
 {
-	public class UserManager : IUserManager
+	public class UserManager : IUserSessionManageable
     {
         // TODO :: 서버 config 클래스 구현.
         const int maxConnections = 10000;
@@ -13,11 +13,12 @@ namespace LogicLibrary
         List<User> player = new List<User>();
         Stack<int> freeUserIndex;
 
-        public UserManager(int poolCapacity)
+        //public UserManager(int poolCapacity)
+        public UserManager()
         {
             
 
-            for (int i = 0; i < poolCapacity; ++i)
+            for (int i = 0; i < maxConnections; ++i)
             {
                 player.Add(new User());
 
@@ -27,7 +28,7 @@ namespace LogicLibrary
             }
         }
 
-        public bool IsUserExist(ClientSession owner)
+        public bool IsUserExist(Session owner)
 		{
             //풀에 뭐라도 있는지 확인한후 있다면 다음 없다면 거짓
             if(IsEmpty() == true)
@@ -74,7 +75,7 @@ namespace LogicLibrary
             }
         }
 
-       public int AllocNewUserToSession(ClientSession newSession,string userID)
+       public int AllocNewUserToSession(Session newSession,string userID)
         {
             //풀이 비어있는지 확인한후
             if(IsFull() == true)
@@ -99,7 +100,7 @@ namespace LogicLibrary
             return 0;
         }
 
-        int IUserManager.FreeUser(ClientSession targetSession)
+        int IUserSessionManageable.FreeUser(Session targetSession)
         {
             //풀에 뭐라도 있는지 확인한후
             if (IsEmpty() == true)
@@ -127,7 +128,7 @@ namespace LogicLibrary
             return 0;
         }
 
-        User FindUser(ClientSession session)
+        User FindUser(Session session)
         {
             if(session == null)
             {
@@ -168,6 +169,16 @@ namespace LogicLibrary
                     player[i] = value;
                 }
             }
+        }
+
+        bool IUserSessionManageable.IsSessionValid(Session session)
+        {
+            return true;
+        }
+
+        int IUserSessionManageable.GetSessionTotalCount()
+        {
+            return 0;
         }
     }
 }

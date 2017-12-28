@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace ManageLogicLibrary
 {
+    /*
 	public partial class ManageLogicProcessor : IPacketHandleable
 	{
 		private void OnServerRegistReqArrived(Packet receivedPacket)
@@ -76,4 +77,5 @@ namespace ManageLogicLibrary
 			postSession.Send(sendPacket);
 		}
 	}
+    */
 }

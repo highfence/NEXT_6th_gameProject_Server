@@ -11,6 +11,7 @@ namespace ManageServer
 
         static void Main(string[] args)
         {
+            /*
 			var service = new NetworkService();
 			var serverManager = new ConnectServerManager();
 			var sessionManager = new SessionManager(serverManager);
@@ -31,7 +32,7 @@ namespace ManageServer
 			while (true)
 			{
 				System.Threading.Thread.Sleep(1000);
-			}
+			}*/
         }
     }
 }

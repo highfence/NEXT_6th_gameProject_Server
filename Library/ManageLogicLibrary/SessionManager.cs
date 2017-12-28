@@ -5,6 +5,7 @@ using NetworkLibrary;
 
 namespace ManageLogicLibrary
 {
+    /*
 	public class SessionManager : ISessionManageable
 	{
 		List<Session> sessionList;
@@ -67,4 +68,5 @@ namespace ManageLogicLibrary
 			return serverSession;
 		}
 	}
+    */
 }
